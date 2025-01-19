@@ -1,5 +1,9 @@
+import { Grid2 } from "@mui/material";
+
 function Dashboard() {
-    return <h1>Home Page</h1>;
+    return <Grid2 container>
+      <h1>Dashboard</h1>
+    </Grid2>;
   }
   
   export default Dashboard;

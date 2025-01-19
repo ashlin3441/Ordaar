@@ -16,6 +16,8 @@
   "bugs": {
     "url": "https://github.com/ashlin3441/Ordaar/issues"
   },
-  "homepage": "https://github.com/ashlin3441/Ordaar#readme"
+  "homepage": "https://github.com/ashlin3441/Ordaar#readme",
+  "dependencies": {
+    "@mui/icons-material": "^6.4.0"
+  }
 }
- 

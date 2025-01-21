@@ -39,50 +39,48 @@ function Sidebar() {
         width: drawerWidth,
         height: "100vh",
         flexShrink: 0,
-        ".MuiPaper-root": {
-          width: drawerWidth,
-          boxSizing: "border-box",
-          background: "linear-gradient(to bottom, rgba(0, 0, 0, 0.7), #202020)",
-          color: "white",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingBottom: "20px",
-          position: "relative",
-        },
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "space-between",
+        position: "relative",
+        color: "white",
       }}
       variant="permanent"
       anchor="left"
     >
-      {/* 🔹 Background Image at the Top */}
       <Box
         sx={{
           width: "100%",
-          height: "120px",
+          height: "25vh", // Image height
           backgroundImage: "url('/background.png')",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPosition: "center",
-          position: "relative",
-          zIndex:1,
-          filter: "grayscale(100%)",
+          position: "absolute",
+          top: 0, // Align the image at the top of the sidebar
+          left: 0,
+          zIndex: 1,
+          filter: "grayscale(100%)", // Keep image behind everything else
         }}
       />
+
+      {/* 🔹 Black Gradient Overlay */}
       <Box
-      sx={{
-        width: "100%",
-        height: "120px",
-        position: "absolute",
-        top: 0,
-        left: 0,
-        background: "linear-gradient(to,#3D3C3C 13%, #3C3B3B 63%,#3E3D3D 100%)",
-        zIndex:1,
-        opacity:.8,
-      }}></Box>
+        sx={{
+          width: "100%",
+          height: "100vh", // Full height of the sidebar
+          position: "absolute",
+          top: 0,
+          left: 0,
+          background:
+            "linear-gradient(to bottom,rgba(77, 76, 76, 0.7),rgb(59,59,58),rgb(59, 58,58), rgb(59,58,58),rgb(59,58,58))", // Transparent to black gradient
+          zIndex: 1, // Gradient above the image
+        }}
+      />
 
       {/* 🔹 App Title */}
-      <Toolbar sx={{ justifyContent: "center", width: "100%" }}>
+      <Toolbar sx={{ justifyContent: "center", width: "100%", zIndex: 2 }}>
         <Typography
           variant="h5"
           sx={{
@@ -92,7 +90,8 @@ function Sidebar() {
             background: "linear-gradient(to bottom, #FDD30F, #FF6B28)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            zIndex:2,
+            zIndex: 3, // Title above gradient
+            marginTop: "40px",
           }}
         >
           Orddar
@@ -100,7 +99,7 @@ function Sidebar() {
       </Toolbar>
 
       {/* 🔹 Sidebar Menu */}
-      <Box sx={{ width: "100%", flexGrow: 1 }}>
+      <Box sx={{ width: "100%", flexGrow: 1, zIndex: 2, marginTop: "40px" }}>
         <List>
           {menuItems.map((item) => (
             <ListItem

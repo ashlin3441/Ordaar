@@ -9,44 +9,61 @@ function Navbar() {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: "#333",
-        padding: "0 16px",
+        backgroundColor: "white",
+        width: "100%",
+        padding: "16px",
       }}
     >
-      <Toolbar sx={{ justifyContent: "space-between" }}>
-        {/* 🔹 Search Bar */}
+      <Toolbar sx={{ justifyContent: "left" }}>
         <Box
           sx={{
             display: "flex",
-            border: "1px solid #aaa",
             alignItems: "center",
             backgroundColor: "white",
-            borderRadius: "16px",
-            padding: "15px 12px 12px 12px",
-            width: "776px",
-            height:"35px" // Adjust width as needed
+            borderRadius: "15px",
+            border: "1px solid #E5E5E5",
+            padding: "8px 16px",
+            width: "100%",
+            maxWidth: "700px",
+            height: "40px",
+            boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
           }}
         >
-          <Search sx={{ color:"orangered", marginRight: "8px" }} />
+          <Search 
+            sx={{ 
+              color: "#FF8A00",
+              fontSize: "32px",
+              marginRight: "12px"
+            }} 
+          />
           <InputBase
             placeholder="Search foods, restaurant by name"
             sx={{
-              color: "#959595",
               flexGrow: 1,
-              fontSize: "22px",
+              "& input": {
+                fontSize: "18px",
+                fontFamily: "Outfit",
+                color: "#959595",
+                "&::placeholder": {
+                  color: "#959595",
+                  opacity: 1,
+                  fontSize: "18px",
+                  fontFamily: "Outfit",
+                }
+              }
             }}
           />
         </Box>
 
         {/* 🔹 Right-Side Buttons */}
-        <Box sx={{ display: "flex", alignItems: "center" }}>
+        <Box sx={{ display: "flex", alignItems: "center",marginLeft:'300px' }}>
           {/* Question Icon Button */}
           <IconButton
             sx={{
               backgroundColor: "#555",
               color: "white",
               borderRadius: "50%",
-              marginRight: "16px",
+              marginRight: "15px",
             }}
           >
             <HelpOutline />

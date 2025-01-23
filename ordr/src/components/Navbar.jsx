@@ -63,7 +63,7 @@ function Navbar() {
               backgroundColor: "#555",
               color: "white",
               borderRadius: "50%",
-              marginRight: "15px",
+              marginRight: "5px",
             }}
           >
             <HelpOutline />

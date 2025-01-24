@@ -19,7 +19,7 @@ import RequestQuoteIcon from "@mui/icons-material/RequestQuote";
 import RestaurantIcon from "@mui/icons-material/Restaurant";
 import HygieneIcon from "@mui/icons-material/CleanHands";
 
-const drawerWidth = 240;
+const drawerWidth = 335;
 
 const menuItems = [
   { text: "Dashboard", path: "/", icon: <HomeIcon /> },
@@ -91,7 +91,7 @@ function Sidebar() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             zIndex: 3, // Title above gradient
-            marginTop: "40px",
+            marginTop: "100px",
           }}
         >
           Orddar
@@ -99,7 +99,7 @@ function Sidebar() {
       </Toolbar>
 
       {/* 🔹 Sidebar Menu */}
-      <Box sx={{ width: "100%", flexGrow: 1, zIndex: 2, marginTop: "40px" }}>
+      <Box sx={{ width: "100%", flexGrow: 1, zIndex: 2, marginTop: "70px" }}>
         <List>
           {menuItems.map((item) => (
             <ListItem

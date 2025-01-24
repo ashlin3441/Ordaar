@@ -11,9 +11,33 @@ const DailyReport = () => {
       }}
     >
       {/* Header */}
-      <Typography variant="h4" sx={{ marginBottom: 2 }}>
-        Daily Report
-      </Typography>
+      <Box
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between", // Space between left and right icons
+          marginBottom: 2,
+        }}
+      >
+        {/* Left Icon and Text */}
+        <Box sx={{ display: "flex", alignItems: "center" }}>
+          {/* Left Icon */}
+          <img
+            src="public/dailyreport.png" // Replace with the correct path to your PNG file
+            alt="Daily Report Icon"
+            style={{ width: "32px", height: "32px", marginRight: "8px" }}
+          />
+          {/* Heading Text */}
+          <Typography variant="h4">Daily Report</Typography>
+        </Box>
+
+        {/* Right Icon */}
+        <img
+          src="public/calender.png" // Replace with the correct path to your second PNG file
+          alt="Right Icon"
+          style={{ width: "32px", height: "32px" }}
+        />
+      </Box>
 
       {/* Grid Container */}
       <Box

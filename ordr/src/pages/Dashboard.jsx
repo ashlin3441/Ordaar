@@ -10,33 +10,36 @@ const Dashboard = () => {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "30% 2px 30%", // Set the line's width to 2px and columns to 30% each
-        gridTemplateRows: "1fr 1fr", // Two rows for the components above and below the line
-        gap: "16px",
+        gridTemplateColumns: "40% 2px 60%", // Left 40%, separator 2px, Right 60%
+        gridTemplateRows: "auto auto", // Automatically adjust row heights
+        gap: "16px", // Small gap between rows
         padding: "16px",
+        marginTop: "64px", // Add space below the navbar if it's fixed
       }}
     >
-      {/* Components on the left side of the line */}
+      {/* Left side Components */}
       <Box sx={{ gridColumn: "1 / 2", gridRow: "1" }}>
         <DailyReport />
       </Box>
+
       <Box sx={{ gridColumn: "1 / 2", gridRow: "2" }}>
         <Orders />
       </Box>
 
-      {/* Line Separator (centered at 35%) */}
+      {/* Vertical line separator */}
       <Box
         sx={{
-          gridColumn: "2 / 3", // Line is in the center column
+          gridColumn: "2 / 3", // Line positioned between left and right
           gridRow: "1 / 3", // Line spans both rows
           backgroundColor: "#ccc", // Light gray color for the line
         }}
       />
 
-      {/* Components on the right side of the line */}
+      {/* Right side Components */}
       <Box sx={{ gridColumn: "3 / 4", gridRow: "1" }}>
         <FoodCategories />
       </Box>
+
       <Box sx={{ gridColumn: "3 / 4", gridRow: "2" }}>
         <TotalSales />
       </Box>

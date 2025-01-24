@@ -20,7 +20,7 @@ function App() {
         <Sidebar />
 
         {/* Main Content */}
-        <Box sx={{ flexGrow: 1, display: "flex", flexDirection: "column" }}>
+        <Box sx={{ flexGrow: 1, display: "flex",width:"100%", flexDirection: "column" }}>
           {/* Navbar */}
           <Navbar />
 

@@ -12,9 +12,11 @@ import Offers from "./pages/Offers";
 import Requests from "./pages/Requests";
 import Dining from "./pages/Dining";
 import Customers from "./pages/Customers";
+import Background from './components/Background';
 
 function App() {
   return (
+    <Background>
     <Router>
       <Box sx={{ 
         display: "flex", 
@@ -44,13 +46,14 @@ function App() {
                 <Route path="/offers" element={<Offers />} />
                 <Route path="/requests" element={<Requests />} />
                 <Route path="/dining" element={<Dining />} />
-                <Route path="/customers" element={<Customers />} />
+                <Route path="/Customers" element={<Customers />} />
               </Routes>
             </Box>
           </Box>
         </Box>
       </Box>
     </Router>
+    </Background>
   );
 }
 

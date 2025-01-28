@@ -1,0 +1,24 @@
+{
+  "name": "ordaar",
+  "version": "1.0.0",
+  "description": "Internship-Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashlin3441/Ordaar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ashlin3441/Ordaar/issues"
+  },
+  "homepage": "https://github.com/ashlin3441/Ordaar#readme",
+  "dependencies": {
+    "@mui/icons-material": "^6.4.0",
+    "recharts": "^2.15.0"
+  }
+}

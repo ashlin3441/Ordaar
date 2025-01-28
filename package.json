@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ashlin3441/Ordaar#readme",
   "dependencies": {
-    "@mui/icons-material": "^6.4.0"
+    "@mui/icons-material": "^6.4.0",
+    "recharts": "^2.15.0"
   }
 }

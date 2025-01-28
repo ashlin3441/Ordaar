@@ -1,3 +1,4 @@
+// DailyReport.jsx
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
@@ -7,113 +8,70 @@ const DailyReport = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        gap: 2, // Space between the header and grid
+        gap: { xs: 1, sm: 2 },
+        marginLeft: "0",
       }}
     >
-      {/* Header */}
       <Box
         sx={{
           display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between", // Space between left and right icons
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: { xs: 2, sm: 0 },
+          alignItems: { xs: 'flex-start', sm: 'center' },
+          justifyContent: "space-between",
           marginBottom: 2,
         }}
       >
-        {/* Left Icon and Text */}
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          {/* Left Icon */}
           <img
-            src="public/dailyreport.png" // Replace with the correct path to your PNG file
+            src="public/dailyreport.png"
             alt="Daily Report Icon"
             style={{ width: "32px", height: "32px", marginRight: "8px" }}
           />
-          {/* Heading Text */}
           <Typography variant="h4">Daily Report</Typography>
         </Box>
 
-        {/* Right Icon */}
         <img
-          src="public/calender.png" // Replace with the correct path to your second PNG file
+          src="public/calender.png"
           alt="Right Icon"
           style={{ width: "32px", height: "32px" }}
         />
       </Box>
 
-      {/* Grid Container */}
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", // Dynamic sizing for uniform boxes
-          gap: 2, // Space between the boxes
+          gridTemplateColumns: {
+            xs: "repeat(1, 1fr)",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(4, 1fr)"
+          },
+          gap: { xs: 1, sm: 2 },
         }}
       >
-        {/* Total Sales */}
-        <Box
-          sx={{
-            bgcolor: "white",
-            p: 2,
-            borderRadius: 2,
-            boxShadow: 2,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">200</Typography>
-          <Typography variant="h6">Total Sales</Typography>
-        </Box>
-
-        {/* Total Refund */}
-        <Box
-          sx={{
-            bgcolor: "white",
-            p: 2,
-            borderRadius: 2,
-            boxShadow: 2,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">254</Typography>
-          <Typography variant="h6">Total Refund</Typography>
-        </Box>
-
-        {/* Cash on Delivery */}
-        <Box
-          sx={{
-            bgcolor: "white",
-            p: 2,
-            borderRadius: 2,
-            boxShadow: 2,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">2070</Typography>
-          <Typography variant="h6">Cash on Delivery</Typography>
-        </Box>
-
-        {/* Online Payment */}
-        <Box
-          sx={{
-            bgcolor: "white",
-            p: 2,
-            borderRadius: 2,
-            boxShadow: 2,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h4">900</Typography>
-          <Typography variant="h6">Online Payment</Typography>
-        </Box>
+        {[
+          { title: "Total Sales", value: "200" },
+          { title: "Total Refund", value: "254" },
+          { title: "Cash on Delivery", value: "2070" },
+          { title: "Online Payment", value: "900" }
+        ].map((item) => (
+          <Box
+            key={item.title}
+            sx={{
+              bgcolor: "white",
+              p: 2,
+              borderRadius: 2,
+              boxShadow: 2,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <Typography variant="h4">{item.value}</Typography>
+            <Typography variant="h6">{item.title}</Typography>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

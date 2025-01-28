@@ -1,4 +1,4 @@
-// src/components/Navbar.js
+// Navbar.jsx
 import React from "react";
 import { AppBar, Toolbar, IconButton, InputBase, Box, Avatar } from "@mui/material";
 import { Search, HelpOutline } from "@mui/icons-material";
@@ -11,10 +11,16 @@ function Navbar() {
         zIndex: (theme) => theme.zIndex.drawer + 1,
         backgroundColor: "white",
         width: "100%",
-        padding: "16px",
+        padding: { xs: "8px", sm: "16px" },
       }}
     >
-      <Toolbar sx={{ justifyContent: "left" }}>
+      <Toolbar 
+        sx={{ 
+          justifyContent: "space-between",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: { xs: 2, sm: 0 },
+        }}
+      >
         <Box
           sx={{
             display: "flex",
@@ -24,7 +30,7 @@ function Navbar() {
             border: "1px solid #E5E5E5",
             padding: "8px 16px",
             width: "100%",
-            maxWidth: "700px",
+            maxWidth: { xs: "100%", sm: "700px" },
             height: "40px",
             boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.05)",
           }}
@@ -32,7 +38,7 @@ function Navbar() {
           <Search 
             sx={{ 
               color: "#FF8A00",
-              fontSize: "32px",
+              fontSize: { xs: "24px", sm: "32px" },
               marginRight: "12px"
             }} 
           />
@@ -41,13 +47,13 @@ function Navbar() {
             sx={{
               flexGrow: 1,
               "& input": {
-                fontSize: "18px",
+                fontSize: { xs: "16px", sm: "18px" },
                 fontFamily: "Outfit",
                 color: "#959595",
                 "&::placeholder": {
                   color: "#959595",
                   opacity: 1,
-                  fontSize: "18px",
+                  fontSize: { xs: "16px", sm: "18px" },
                   fontFamily: "Outfit",
                 }
               }
@@ -55,26 +61,33 @@ function Navbar() {
           />
         </Box>
 
-        {/* 🔹 Right-Side Buttons */}
-        <Box sx={{ display: "flex", alignItems: "center",marginLeft:'300px' }}>
-          {/* Question Icon Button */}
+        <Box sx={{ 
+          display: "flex", 
+          alignItems: "center",
+          marginLeft: { xs: '0', sm: '20px', md: '300px' },
+          width: { xs: '100%', sm: 'auto' },
+          justifyContent: { xs: 'center', sm: 'flex-end' }
+        }}>
           <IconButton
             sx={{
               backgroundColor: "#555",
               color: "white",
               borderRadius: "50%",
               marginRight: "5px",
+              padding: { xs: "6px", sm: "8px" },
             }}
           >
-            <HelpOutline />
+            <HelpOutline sx={{ fontSize: { xs: "20px", sm: "24px" } }} />
           </IconButton>
 
-          {/* Profile Picture Button */}
           <IconButton>
             <Avatar
               alt="Profile"
-              src="/profile.jpg" // Replace with your profile image path
-              sx={{ width: "40px", height: "40px" }}
+              src="/profile.jpg"
+              sx={{ 
+                width: { xs: "32px", sm: "40px" }, 
+                height: { xs: "32px", sm: "40px" } 
+              }}
             />
           </IconButton>
         </Box>
@@ -84,3 +97,4 @@ function Navbar() {
 }
 
 export default Navbar;
+

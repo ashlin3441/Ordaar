@@ -1,3 +1,4 @@
+// Dashboard.jsx
 import React from "react";
 import { Box } from "@mui/material";
 import DailyReport from "../components/DailyReport";
@@ -10,37 +11,50 @@ const Dashboard = () => {
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: "40% 2px 60%", // Left 40%, separator 2px, Right 60%
-        gridTemplateRows: "auto auto", // Automatically adjust row heights
-        gap: "16px", // Small gap between rows
-        padding: "16px",
-        marginTop: "64px", // Add space below the navbar if it's fixed
+        gridTemplateColumns: {
+          xs: "1fr",
+          md: "40% 2px 60%"
+        },
+        gridTemplateRows: "auto auto",
+        gap: { xs: "8px", sm: "16px" },
+        padding: { xs: "8px", sm: "16px" },
+        marginTop: { xs: "56px", sm: "64px" }
       }}
     >
-      {/* Left side Components */}
-      <Box sx={{ gridColumn: "1 / 2", gridRow: "1" }}>
+      <Box sx={{ 
+        gridColumn: { xs: "1", md: "1 / 2" }, 
+        gridRow: "1" 
+      }}>
         <DailyReport />
       </Box>
 
-      <Box sx={{ gridColumn: "1 / 2", gridRow: "2" }}>
+      <Box sx={{ 
+        gridColumn: { xs: "1", md: "1 / 2" }, 
+        gridRow: "2" 
+      }}>
         <Orders />
       </Box>
 
-      {/* Vertical line separator */}
       <Box
         sx={{
-          gridColumn: "2 / 3", // Line positioned between left and right
-          gridRow: "1 / 3", // Line spans both rows
-          backgroundColor: "#ccc", // Light gray color for the line
+          display: { xs: "none", md: "block" },
+          gridColumn: "2 / 3",
+          gridRow: "1 / 3",
+          backgroundColor: "#ccc",
         }}
       />
 
-      {/* Right side Components */}
-      <Box sx={{ gridColumn: "3 / 4", gridRow: "1" }}>
+      <Box sx={{ 
+        gridColumn: { xs: "1", md: "3 / 4" }, 
+        gridRow: { xs: "3", md: "1" } 
+      }}>
         <FoodCategories />
       </Box>
 
-      <Box sx={{ gridColumn: "3 / 4", gridRow: "2" }}>
+      <Box sx={{ 
+        gridColumn: { xs: "1", md: "3 / 4" }, 
+        gridRow: { xs: "4", md: "2" } 
+      }}>
         <TotalSales />
       </Box>
     </Box>

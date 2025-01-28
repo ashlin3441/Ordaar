@@ -1,9 +1,10 @@
+// App.jsx
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard"; // Updated to include the child components
+import Dashboard from "./pages/Dashboard";
 import Hygiene from "./pages/Hygiene";
 import Payments from "./pages/Payments";
 import Users from "./pages/Users";
@@ -15,21 +16,28 @@ import Customers from "./pages/Customers";
 function App() {
   return (
     <Router>
-      <Box sx={{ display: "flex", height: "100vh" }}>
-        {/* Sidebar */}
+      <Box sx={{ 
+        display: "flex", 
+        height: "100vh",
+        flexDirection: { xs: 'column', md: 'row' }
+      }}>
         <Sidebar />
-
-        {/* Main Content */}
-        <Box sx={{ flexGrow: 1, display: "flex",width:"100%", flexDirection: "column" }}>
-          {/* Navbar */}
+        <Box sx={{ 
+          flexGrow: 1, 
+          display: "flex",
+          width: { xs: '100%', md: 'calc(100% - 335px)' },
+          marginLeft: { xs: 0, md: '0px' },
+          flexDirection: "column" 
+        }}>
           <Navbar />
-
-          {/* Content Area */}
-          <Box sx={{ display: "flex", flexGrow: 1, padding: "16px" }}>
-            {/* Routes Area */}
+          <Box sx={{ 
+            display: "flex", 
+            flexGrow: 1, 
+            padding: { xs: "8px", sm: "16px" }
+          }}>
             <Box sx={{ flex: 1 }}>
               <Routes>
-                <Route path="/" element={<Dashboard />} /> {/* Default Dashboard Route */}
+                <Route path="/" element={<Dashboard />} />
                 <Route path="/hygiene" element={<Hygiene />} />
                 <Route path="/payments" element={<Payments />} />
                 <Route path="/users" element={<Users />} />

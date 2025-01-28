@@ -10,15 +10,16 @@ function Navbar() {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         backgroundColor: "white",
-        width: "100%",
+        width: {lg:"70%",xl:"80%"},
         padding: { xs: "8px", sm: "16px" },
+        background:'transparent'
       }}
     >
       <Toolbar 
         sx={{ 
-          justifyContent: "space-between",
+          justifyContent: "left",
           flexDirection: { xs: "column", sm: "row" },
-          gap: { xs: 2, sm: 0 },
+          gap: { xs: 2, sm: 2 },
         }}
       >
         <Box
@@ -64,16 +65,17 @@ function Navbar() {
         <Box sx={{ 
           display: "flex", 
           alignItems: "center",
-          marginLeft: { xs: '0', sm: '20px', md: '300px' },
+          marginLeft: { xs: '0', sm: '20px', md: '230px' },
           width: { xs: '100%', sm: 'auto' },
-          justifyContent: { xs: 'center', sm: 'flex-end' }
+          justifyContent: { xs: 'center', sm: 'center'},
+
         }}>
           <IconButton
             sx={{
               backgroundColor: "#555",
               color: "white",
               borderRadius: "50%",
-              marginRight: "5px",
+              marginRight: "20px",
               padding: { xs: "6px", sm: "8px" },
             }}
           >

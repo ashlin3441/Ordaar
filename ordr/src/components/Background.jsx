@@ -20,7 +20,7 @@ const Background = ({ children }) => {
           right: 0,
           bottom: 0,
           backgroundImage: `url('/background-1.png')`, // Replace with your image path
-          backgroundSize: 'cover',
+          backgroundSize: 'cover',  
           backgroundRepeat: 'no-repeat',
           
           zIndex: 1,

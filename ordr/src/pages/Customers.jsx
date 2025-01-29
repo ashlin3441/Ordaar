@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   TextField,
@@ -10,12 +10,9 @@ import {
   InputAdornment,
   Paper,
   Container,
-  Grid2,
+  Button,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
-import EmailIcon from "@mui/icons-material/Email";
-import PhoneIcon from "@mui/icons-material/Phone";
+import { motion } from "framer-motion";
 
 const customerData = [
   {
@@ -26,54 +23,77 @@ const customerData = [
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 2,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 3,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 4,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 5,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 6,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
   {
-    id: 1,
+    id: 7,
     name: "Jhone Smith",
     email: "jhoneSmith@gmail.com",
     phone: "+91 1234567890",
     avatar: "/path-to-avatar.jpg",
   },
+  {
+    id: 8,
+    name: "Jhone Smith",
+    email: "jhoneSmith@gmail.com",
+    phone: "+91 1234567890",
+    avatar: "/path-to-avatar.jpg",
+  },
+  // Add more customers if needed
 ];
 
 const Customers = () => {
+  const [customers, setCustomers] = useState(customerData);
+  const [deletingId, setDeletingId] = useState(null);
+
+  const handleDeleteClick = (id) => {
+    setDeletingId(id);
+  };
+
+  const handleCancelDelete = () => {
+    setDeletingId(null);
+  };
+
+  const handleConfirmDelete = (id) => {
+    setCustomers(customers.filter((customer) => customer.id !== id));
+    setDeletingId(null);
+  };
+
   return (
     <Container maxWidth="xl">
       <Box sx={{ py: 3 }}>
-        {/* Customer Details Section */}
         <Paper
           elevation={0}
           sx={{
@@ -84,19 +104,22 @@ const Customers = () => {
             marginTop: "70px",
           }}
         >
-          <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" }}>
+          <Typography variant="h5" sx={{ mb: 1, fontWeight: "bold" ,fontFamily:'outfit'}}>
             Customer Details
           </Typography>
-          
-          {/* Category Search Bar */}
+
           <TextField
             fullWidth
             variant="outlined"
-            placeholder="Search foods category"
+            placeholder="Search customers"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon sx={{ color: "text.secondary" }} />
+                  <img
+                    src="search-icon.png"
+                    alt="Search"
+                    style={{ width: 20, height: 20 }}
+                  />
                 </InputAdornment>
               ),
               sx: {
@@ -110,136 +133,88 @@ const Customers = () => {
                 },
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                   borderColor: "orange",
-              },
+                },
               },
             }}
-            sx={{ mb: 1 }}
+            sx={{ mb: 2,fontFamily:'outfit' }}
           />
 
-          {/* Customer List */}
           <List
             sx={{
-              maxHeight: "400px", // Set a maximum height for the scrollable area  
-              overflowY: "auto", // Enable vertical scrolling  
+              maxHeight: "400px",
+              overflowY: "auto",
               bgcolor: "transparent",
-              borderRadius:5,
-              paddingRight:"25px",
-              "&::-webkit-scrollbar": {  
-                width: '8px', // Width of the scrollbar  
-              },  
-              "&::-webkit-scrollbar-track": {  
-                background: '#E2E2E2', // Background of the scrollbar track  
-                borderRadius: '10px',  
-              },  
-              "&::-webkit-scrollbar-thumb": {  
-                background: '#BDBDBD', // Color of the scrollbar thumb  
-                borderRadius: '10px',  
-              },  
-              "&::-webkit-scrollbar-thumb:hover": {  
-                background: '#BDBDBD', // Color of the scrollbar thumb on hover  
-              }, 
+              borderRadius: 5,
+              paddingRight: "25px",
+              "&::-webkit-scrollbar": {
+                width: "8px", // Width of the scrollbar
+              },
+              "&::-webkit-scrollbar-track": {
+                background: "#E2E2E2", // Background of the scrollbar track
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb": {
+                background: "#BDBDBD", // Color of the scrollbar thumb
+                borderRadius: "10px",
+              },
+              "&::-webkit-scrollbar-thumb:hover": {
+                background: "#BDBDBD", // Color of the scrollbar thumb on hover
+              },
+              fontFamily:'outfit'
             }}
           >
-            {customerData.map((customer) => (
-              <ListItem
+            {customers.map((customer) => (
+              <motion.div
                 key={customer.id}
-                sx={{
-                  py: 1, // Added more vertical padding for better spacing
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                  bgcolor: "#fff", // Set a white background for each item
-                  borderRadius: 5, // Slightly improve the roundness
-                  mb: 2, // Margin bottom to separate each item
-                  
-                }}
+                animate={{ x: deletingId === customer.id ? -100 : 0 }}
+                transition={{ duration: 0.3 }}
               >
-                {/* Customer Avatar */}
-                <Avatar
-                  src={customer.avatar}
-                  alt={customer.name}
-                  sx={{ width: 48, height: 48 }}
-                />
-
-                {/* Grid Container for Aligned Content */}
-                <Grid2
-                  container
-                  spacing={2}
-                  sx={{ flex: 1, alignItems: "center" }}
-                >
-                  {/* Name */}
-                  <Grid2 item xs={3}>
-                    <Typography
-                      variant="subtitle1"
-                      sx={{
-                        fontWeight: 500,
-                        color: "#333",
-                        fontSize: "20px",
-                        marginRight:'120px'
-                      }}
-                    >
-                      {customer.name}
-                    </Typography>
-                  </Grid2>
-
-                  {/* Phone */}
-                  <Grid2 item xs={4}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        marginRight:'120px',
-                        gap: 1,
-                      }}
-                    >
-                      <PhoneIcon sx={{ color: "#FFA726", fontSize: 20 }} />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#666",
-                          fontSize: "20px",
-                        }}
-                      >
-                        {customer.phone}
-                      </Typography>
-                    </Box>
-                  </Grid2>
-
-                  {/* Email */}
-                  <Grid2 item xs={4}>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 1,
-                      }}
-                    >
-                      <EmailIcon sx={{ color: "#FFA726", fontSize: 20 }} />
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#666",
-                          fontSize: "20px",
-                        }}
-                      >
-                        {customer.email}
-                      </Typography>
-                    </Box>
-                  </Grid2>
-                </Grid2>
-                {/* Delete Button */}
-                <IconButton
-                  edge="end"
+                <ListItem
                   sx={{
-                    color: "error.light",
-                    "&:hover": {
-                      bgcolor: "error.lighter",
-                    },
+                    py: 1,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1,
+                    bgcolor: "#fff",
+                    borderRadius: 5,
+                    mb: 2,
+                    position: "relative",
                   }}
                 >
-                  <DeleteOutlineIcon />
-                </IconButton>
-              </ListItem>
+                  <Avatar
+                    src={customer.avatar}
+                    alt={customer.name}
+                    sx={{ width: 48, height: 48 }}
+                  />
+                  <Box sx={{ flex: 1, display: "flex", alignItems: "center", gap: 2 }}>
+                    <Typography variant="subtitle1" sx={{ fontWeight: 500, color: "#333", fontSize: "20px" ,marginRight:'150px',fontFamily:'outfit'}}>
+                      {customer.name}
+                    </Typography>
+                    <img src="phone.png" alt="Phone" style={{ width: 20, height: 20 }} />
+                    <Typography variant="body2" sx={{ color: "#666", fontSize: "18px" ,marginRight:'150px',fontFamily:'outfit'}}>
+                      {customer.phone}
+                    </Typography>
+                    <img src="mail_icon.png" alt="Phone" style={{ width: 20, height: 20 }} />
+                    <Typography variant="body2" sx={{ color: "#666", fontSize: "18px" ,fontFamily:'outfit'}}>
+                      {customer.email}
+                    </Typography>
+                  </Box>
+                  {deletingId === customer.id ? (
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                      <Button variant="outlined" color="" sx={{opacity:"0.8",fontFamily:'outfit'}}onClick={handleCancelDelete}>
+                        Cancel
+                      </Button>
+                      <Button variant="" color="" onClick={() => handleConfirmDelete(customer.id)}>
+                      <img src="delete-icon.png" alt="Delete" style={{ width: 20, height: 20 ,}} />
+                      </Button>
+                    </Box>
+                  ) : (
+                    <IconButton onClick={() => handleDeleteClick(customer.id)}>
+                      <img src="delete-icon.png" alt="Delete" style={{ width: 20, height: 20 }} />
+                    </IconButton>
+                  )}
+                </ListItem>
+              </motion.div>
             ))}
           </List>
         </Paper>

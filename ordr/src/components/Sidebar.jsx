@@ -58,6 +58,7 @@ function Sidebar() {
         justifyContent: "space-between",
         position: "relative",
         color: "white",
+        fontFamily:'Outfit'
       }}
     >
       <Box

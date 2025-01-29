@@ -1,5 +1,5 @@
 // App.jsx
-import React from 'react';
+import React,{useState} from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "./components/Sidebar";
@@ -13,8 +13,10 @@ import Requests from "./pages/Requests";
 import Dining from "./pages/Dining";
 import Customers from "./pages/Customers";
 import Background from './components/Background';
+import Profile from './pages/profile';
 
 function App() {
+  const [profileOpen, setProfileOpen] = useState(false);
   return (
     <Background>
     <Router>
@@ -31,7 +33,7 @@ function App() {
           marginLeft: { xs: 0, md: '0px' },
           flexDirection: "column" 
         }}>
-          <Navbar />
+          <Navbar onProfileClick={() => setProfileOpen(true)}/>
           <Box sx={{ 
             display: "flex", 
             flexGrow: 1, 
@@ -53,6 +55,7 @@ function App() {
         </Box>
       </Box>
     </Router>
+    <Profile open={profileOpen} onClose={() => setProfileOpen(false)} />
     </Background>
   );
 }

@@ -3,7 +3,7 @@ import React from "react";
 import { AppBar, Toolbar, IconButton, InputBase, Box, Avatar } from "@mui/material";
 import { Search, HelpOutline } from "@mui/icons-material";
 
-function Navbar() {
+function Navbar({ onProfileClick }) {
   return (
     <Box
       position="fixed"
@@ -82,7 +82,7 @@ function Navbar() {
             <HelpOutline sx={{ fontSize: { xs: "20px", sm: "24px" } }} />
           </IconButton>
 
-          <IconButton>
+          <IconButton onClick={onProfileClick}>
             <Avatar
               alt="Profile"
               src="/profile.jpg"

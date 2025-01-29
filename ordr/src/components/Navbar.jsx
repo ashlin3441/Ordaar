@@ -10,7 +10,7 @@ function Navbar() {
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
         backgroundColor: "white",
-        width: "100%",
+        width: "80%",
         padding: { xs: "8px", sm: "16px" },
       }}
     >
@@ -64,9 +64,9 @@ function Navbar() {
         <Box sx={{ 
           display: "flex", 
           alignItems: "center",
-          marginLeft: { xs: '0', sm: '20px', md: '300px' },
-          width: { xs: '100%', sm: 'auto' },
-          justifyContent: { xs: 'center', sm: 'flex-end' }
+          marginLeft: { xs: '0', sm: '20px', md: '30px' },
+          width: { xs: '100%', sm: '100%' ,md:'100%'},
+          justifyContent: { xs: 'center', sm: 'flex-end' ,md:'flex-end'}
         }}>
           <IconButton
             sx={{

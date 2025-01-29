@@ -1,8 +1,7 @@
-// Orders.jsx
 import React, { useState } from "react";
-import { Box, Typography, Grid, Button } from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 
-const Orders = () => {
+const Orders = ({ onManageClick }) => {
   const orderStatuses = [
     { label: "All", value: "all" },
     { label: "Pending", value: "pending" },
@@ -28,94 +27,66 @@ const Orders = () => {
 
   return (
     <Box mt={2}>
+      {/* Header Section */}
       <Box
         sx={{
           display: "flex",
-          flexDirection: { xs: 'column', sm: 'row' },
-          gap: { xs: 2, sm: 0 },
+          flexDirection: { xs: "column", sm: "row" },
           justifyContent: "space-between",
-          alignItems: { xs: 'flex-start', sm: 'center' },
+          alignItems: "center",
           marginBottom: 2,
         }}
       >
         <Typography variant="h4">Orders</Typography>
         <Button
           variant="contained"
-          sx={{
-            backgroundColor: "orange",
-            "&:hover": {
-              backgroundColor: "#ff9c33",
-            },
-          }}
+          sx={{ backgroundColor: "orange", "&:hover": { backgroundColor: "#ff9c33" } }}
+          onClick={onManageClick} // Navigate to OrdersPage
         >
           Manage
         </Button>
       </Box>
 
-      <Box>
-        <Grid container spacing={{ xs: 1, sm: 2 }} mt={1}>
-          {orderStatuses.map((status) => (
-            <Grid item xs={6} sm="auto" key={status.value}>
-              <Button
-                fullWidth
-                variant={selectedStatus === status.value ? "contained" : "outlined"}
-                color="primary"
-                sx={{
-                  backgroundColor:
-                    selectedStatus === status.value ? "orange" : "transparent",
-                  color: selectedStatus === status.value ? "white" : "#959595",
-                  "&:hover": {
-                    backgroundColor:
-                      selectedStatus === status.value ? "#ff9c33" : "#f0f0f0",
-                  },
-                }}
-                onClick={() => setSelectedStatus(status.value)}
-              >
-                {status.label}
-              </Button>
-            </Grid>
-          ))}
-        </Grid>
+      {/* Status Filters */}
+      <Box sx={{ display: "flex", gap: 3, mb: 2, flexWrap: "wrap" }}>
+        {orderStatuses.map((status) => (
+          <Typography
+            key={status.value}
+            onClick={() => setSelectedStatus(status.value)}
+            sx={{
+              color: selectedStatus === status.value ? "orange" : "#959595",
+              cursor: "pointer",
+              "&:hover": {
+                color: selectedStatus === status.value ? "#ff9c33" : "#757575",
+              },
+              fontWeight: "medium",
+            }}
+          >
+            {status.label}
+          </Typography>
+        ))}
       </Box>
 
-      <Box sx={{ height: "1px", backgroundColor: "#ccc", my: 2 }} />
+      <Box sx={{ height: "1px", backgroundColor: "#ccc", mb: 2 }} />
 
-      <Box sx={{
-        display: "grid",
-        gridTemplateColumns: { xs: "1fr", sm: "repeat(auto-fill, minmax(300px, 1fr))" },
-        gap: 2
-      }}>
+      {/* Orders List */}
+      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
         {filteredOrders.map((order) => (
           <Box
             key={order.orderId}
             sx={{
-              display: "flex",
-              flexDirection: "column",
               bgcolor: "white",
               p: 2,
+              border: 1,
               borderRadius: 2,
               boxShadow: 1,
-              height: "131px",
-              width: "100%",
             }}
           >
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-              <Typography variant="body1" color="black">
-                Order Status
-              </Typography>
-              <Typography variant="body1" color="black">
-                Order ID: {order.orderId}
-              </Typography>
+              <Typography variant="body1">Order ID: {order.orderId}</Typography>
+              <Typography variant="body1">Status: {order.status}</Typography>
             </Box>
-
-            <Box>
-              <Typography variant="body2" color="gray">
-                Status: {order.status}
-              </Typography>
-              <Typography variant="body2" color="gray">
-                Time: {order.time}
-              </Typography>
-            </Box>
+            <Typography variant="body2" color="gray">Time: {order.time}</Typography>
           </Box>
         ))}
       </Box>

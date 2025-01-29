@@ -1,4 +1,3 @@
-// DailyReport.jsx
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 
@@ -41,12 +40,9 @@ const DailyReport = () => {
       <Box
         sx={{
           display: "grid",
-          gridTemplateColumns: {
-            xs: "repeat(1, 1fr)",
-            sm: "repeat(2, 1fr)",
-            md: "repeat(4, 1fr)"
-          },
-          gap: { xs: 1, sm: 2 },
+          gridTemplateColumns: "repeat(2, 1fr)", // Always show 2 columns
+          gap: { xs: 2, sm: 3 },
+          width: "100%",
         }}
       >
         {[
@@ -60,6 +56,7 @@ const DailyReport = () => {
             sx={{
               bgcolor: "white",
               p: 2,
+              border:1,
               borderRadius: 2,
               boxShadow: 2,
               display: "flex",

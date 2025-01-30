@@ -41,7 +41,7 @@ const Orders = ({ onManageClick }) => {
         <Button
           variant="contained"
           sx={{ backgroundColor: "orange", "&:hover": { backgroundColor: "#ff9c33" } }}
-          onClick={onManageClick} // Navigate to OrdersPage
+          onClick={onManageClick} // Collapse Orders
         >
           Manage
         </Button>

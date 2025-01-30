@@ -23,7 +23,7 @@ const DailyReport = () => {
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <img
-            src="public/dailyreport.png"
+            src="/dailyreport.png"
             alt="Daily Report Icon"
             style={{ width: "32px", height: "32px", marginRight: "8px" }}
           />
@@ -31,7 +31,7 @@ const DailyReport = () => {
         </Box>
 
         <img
-          src="public/calender.png"
+          src="/calender.png"
           alt="Right Icon"
           style={{ width: "32px", height: "32px" }}
         />

@@ -7,19 +7,19 @@ import {
   IconButton,
   InputAdornment,
 } from "@mui/material";
-import OtpEmail from "./OtpEmail";    
+import OtpNumber from "./OtpNumber";    
 
-export default function EmailChange({ onClose }) {
+export default function NumberChange({ onClose }) {
   const [newEmail, setNewEmail] = useState("");
 
-  const [showOtpVerification, setShowOtpEmail] = useState(false); // New state to toggle OTP screen
+  const [showOtpNumber, setShowOtpNumber] = useState(false); // New state to toggle OTP screen
 
   const handleSubmit = () => {
-    setShowOtpEmail(true); // Switch to OTP verification
+    setShowOtpNumber(true); // Switch to OTP verification
   };
 
-  if (showOtpVerification) {
-    return <OtpEmail onClose={onClose} />; // Render OTP verification screen
+  if (showOtpNumber) {
+    return <OtpNumber onClose={onClose} />; // Render OTP verification screen
   }
   return (
 
@@ -44,7 +44,7 @@ export default function EmailChange({ onClose }) {
               fontSize: "28px",
             }}
           >
-            Change mail
+            Change phone number
           </Typography>
         </Box>
 
@@ -64,7 +64,7 @@ export default function EmailChange({ onClose }) {
               justifyContent: "center",
             }}
           >
-            Enter your new email
+            Enter your new number
           </Typography>
 
           <Typography
@@ -80,7 +80,7 @@ export default function EmailChange({ onClose }) {
               lineHeight: "1.5", // Increases readability
             }}
           >
-            Kindly input your new email address in the provided field
+            Kindly input your new number in the provided field
           </Typography>
 
           <TextField
@@ -88,12 +88,12 @@ export default function EmailChange({ onClose }) {
             variant="outlined"
             value={newEmail}
             onChange={(e) => setNewEmail(e.target.value)}
-            placeholder="Email ID"
+            placeholder="Enter Phone Number"
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <img
-                    src="mail_icon.png"
+                    src="phone-icon.png"
                     alt="Search"
                     style={{ width: 20, height: 20 }}
                   />

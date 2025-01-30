@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Mail, Phone, Lock } from "lucide-react";
 import EmailChange from "./EmailChange";
+import NumberChange from "./NumberChange";
 
 export default function Profile({ open, onClose }) {
   const [activeView, setActiveView] = useState("profile");
@@ -29,6 +30,7 @@ export default function Profile({ open, onClose }) {
       icon: <Phone color="#FFA500" size={22} />,
       label: "Phone Number",
       value: "+911234567890",
+      onChange: () => setActiveView("numberChange"),
     },
     {
       icon: <Lock color="#FFA500" size={22} />,
@@ -184,9 +186,11 @@ export default function Profile({ open, onClose }) {
             </Button>
           </Box>
         </Box>
-      ) : (
-        <EmailChange onClose={() => setActiveView("profile")} />
-      )}
+     ) : activeView === "emailChange" ? (
+      <EmailChange onClose={() => setActiveView("profile")} />
+    ) : (
+      <NumberChange onClose={() => setActiveView("profile")} />
+    )}
     </Drawer>
   );
 }

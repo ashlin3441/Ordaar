@@ -6,21 +6,18 @@ import {
   Container,
   TextField,
   Button,
-  FormControl,
-  Select,
-  MenuItem,
   InputAdornment,
   Stack,
   Grid2,
   FormControlLabel,
   Checkbox,
-  Link,
   IconButton,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { styles } from "../styles/Login_Styles";
 
 const LoginEmail = () => {
   const theme = useTheme();
@@ -33,115 +30,30 @@ const LoginEmail = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const handleSendOtpClick = () => {
-    navigate("/LoginOtpEmail"); 
+    navigate("/LoginOtpEmail");
   };
-
 
   return (
     <BackgroundLayout>
-      <Container
-        maxWidth={false}
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between",
-          padding: "5%",
-        }}
-      >
-        <Stack
-          spacing={-1}
-          sx={{
-            width: "100%",
-            textAlign: "left",
-            color: "white",
-            position: "absolute",
-            top: { xs: "10px", sm: "30px", md: "25px", lg: "30px" },
-            left: { xs: "10px", sm: "40px", md: "40px", lg: "50px" },
-          }}
-        >
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: "bold",
-              marginTop: "0px",
-              marginRight: "1%px",
-              fontFamily: "Outfit",
-              marginBottom: "10px",
-              fontSize: {
-                xs: "1.5rem",
-                sm: "2.5rem",
-                md: "3rem",
-                lg: "3.7rem",
-              },
-            }}
-          >
+      <Container maxWidth={false} sx={styles.container}>
+        <Stack spacing={-1} sx={styles.header}>
+          <Typography variant="h3" sx={styles.title}>
             Orddar
           </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{
-              marginTop: "0px",
-              fontSize: {
-                xs: "1rem",
-                sm: "1rem",
-                md: "1rem",
-                lg: "1.1rem",
-              },
-              fontFamily: "Outfit",
-              marginBottom: "10px",
-            }}
-          >
+          <Typography variant="subtitle1" sx={styles.subtitle}>
             Perfect food companion
           </Typography>
         </Stack>
 
-        <Grid2
-          container
-          justifyContent="center"
-          sx={{
-            width: "100%",
-            position: "absolute",
-            top: {
-              xs: "0rem",
-              sm: "7rem",
-              md: "8rem",
-              lg: "9rem",
-            },
-            left: {
-              xs: "0rem",
-              sm: "2rem",
-              md: "0rem",
-              lg: "-2rem",
-            },
-          }}
-        >
+        <Grid2 container justifyContent="center" sx={styles.imageContainer2}>
           <Grid2 item xs={12} sm={8} md={6} lg={5} xl={4}>
             <Box
               component="img"
               src="Business_growth.png"
               alt="Delivery Instructions"
-              sx={{
-                width: {
-                  xs: "60%",
-                  sm: "33%",
-                  md: "29%",
-                  lg: "33%",
-                },
-                maxWidth: "100%",
-                height: "auto",
-                zIndex: 1,
-                transform: {
-                  xs: "scale(0.8)",
-                  sm: "scale(0.9)",
-                  md: "scale(1)",
-                  lg: "scale(1.1)",
-                },
-                transition:
-                  "transform 0.3s ease-in-out, width 0.3s ease-in-out",
-              }}
+              sx={styles.image2}
             />
           </Grid2>
         </Grid2>
@@ -150,61 +62,16 @@ const LoginEmail = () => {
           container
           direction="column"
           spacing={2}
-          sx={{
-            width: { xs: "90%", sm: "60%", md: "50%", lg: "30%" },
-            position: "absolute",
-            left: { xs: "5%", sm: "-8%", md: "-5%", lg: "12%" },
-            bottom: { xs: "10px", sm: "20%", md: "14%", lg: "12%" },
-            color: "#fff",
-            zIndex: 3,
-            margin: "0px auto",
-            textAlign: "center",
-          }}
+          sx={styles.textContainer}
         >
           <Grid2 item>
-            <Typography
-              variant="h4"
-              sx={{
-                fontFamily: "Outfit",
-                fontWeight: "bold",
-                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-                fontSize: {
-                  xs: "clamp(1.2rem, 4vw, 1.5rem)",
-                  sm: "clamp(1.2rem, 4vw, 1.7rem)",
-                  md: "clamp(1.9rem, 3vw, 2.2rem)",
-                  lg: "clamp(2.3rem, 2.5vw, 2.4rem)",
-                },
-                textAlign: "center",
-                marginBottom: {
-                  xs: "-10%",
-                  sm: "-5%",
-                  md: "-6%",
-                  lg: "-6%",
-                },
-                transition: "font-size 0.3s ease-in-out",
-              }}
-            >
+            <Typography variant="h4" sx={styles.GroceryText}>
               Book Dining
             </Typography>
           </Grid2>
 
           <Grid2 item>
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: "bold",
-                fontFamily: "Outfit",
-                textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-                fontSize: {
-                  xs: "clamp(1rem, 3.5vw, 1.25rem)",
-                  sm: "clamp(1rem, 3.5vw, 1.5rem)",
-                  md: "clamp(1.8rem, 3vw, 1.8rem)",
-                  lg: "clamp(1.5rem, 2.5vw, 1.6rem)",
-                },
-                textAlign: "center",
-                transition: "font-size 0.3s ease-in-out",
-              }}
-            >
+            <Typography variant="h5" sx={styles.bestFoodsText}>
               in Best Restaurants
             </Typography>
           </Grid2>
@@ -216,21 +83,7 @@ const LoginEmail = () => {
                 "and scrambled it to make a type specimen",
                 " book.",
               ].map((text, index) => (
-                <Typography
-                  key={index}
-                  variant="body1"
-                  sx={{
-                    fontFamily: "Outfit",
-                    fontSize: {
-                      xs: "clamp(0.7rem, 2.5vw, 0.8rem)",
-                      sm: "clamp(0.6rem, 2.5vw, .8rem)",
-                      md: "clamp(1rem, 2.5vw, 1rem)",
-                      lg: "clamp(0.7rem, 2.5vw, .9rem)",
-                    },
-                    textAlign: "center",
-                    transition: "font-size 0.3s ease-in-out",
-                  }}
-                >
+                <Typography key={index} variant="body1" sx={styles.bodyText}>
                   {text}
                 </Typography>
               ))}
@@ -242,46 +95,14 @@ const LoginEmail = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{
-            position: "absolute",
-            width: "100%",
-          }}
+          sx={styles.positionwidth}
         >
-          <Grid2
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            lg={3}
-            sx={{
-              position: {
-                xs: "static",
-                sm: "absolute",
-                md: "absolute",
-                lg: "absolute",
-              },
-              top: { xs: "2px", sm: "40px", md: "-20px", lg: "-40px" },
-              left: { xs: "0", sm: "62%", md: "62%", lg: "66%" },
-              transform: {
-                xs: "none",
-                sm: "translateX(-50%)",
-                md: "translateX(-50%)",
-                lg: "translateX(-50%)",
-              },
-              width: { xs: "50%", sm: "32%", md: "26%", lg: "25%" },
-              maxWidth: "100%",
-              height: "auto",
-              zIndex: 1,
-            }}
-          >
+          <Grid2 item xs={12} sm={6} md={3} lg={3} sx={styles.capImage}>
             <Box
               component="img"
               src="cap.png"
               alt="Background"
-              sx={{
-                width: "100%",
-                height: "auto",
-              }}
+              sx={styles.widthheight}
             />
           </Grid2>
         </Grid2>
@@ -289,97 +110,23 @@ const LoginEmail = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{
-            position: "absolute",
-            width: "100%",
-          }}
+          sx={styles.positionwidth}
         >
-          <Grid2
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            lg={3}
-            sx={{
-              position: {
-                xs: "static",
-                sm: "absolute",
-                md: "absolute",
-                lg: "absolute",
-              },
-              top: { xs: "2px", sm: "550px", md: "500px", lg: "570px" },
-              left: { xs: "0", sm: "86%", md: "86%", lg: "86%" },
-              transform: {
-                xs: "none",
-                sm: "translateX(-50%)",
-                md: "translateX(-50%)",
-                lg: "translateX(-50%)",
-              },
-              width: { xs: "50%", sm: "3%", md: "3%", lg: "3%" },
-              maxWidth: "100%",
-              height: "auto",
-              zIndex: 1,
-            }}
-          >
+          <Grid2 item xs={12} sm={6} md={3} lg={3} sx={styles.PageChange}>
             <Box
               component="img"
               src="bottom_3.png"
               alt="Background"
-              sx={{
-                width: "100%",
-                height: "auto",
-              }}
+              sx={styles.widthheight}
             />
           </Grid2>
         </Grid2>
 
-        <Stack
-          sx={{
-            width: { xs: "90%", sm: "50%", md: "35%", lg: "32%" },
-            minHeight: "60vh",
-            backgroundColor: "rgba(255, 255, 255, 0.4)",
-            borderRadius: 6,
-            padding: { xs: 2, sm: 3, md: 4 },
-            marginLeft: { xs: "10px", sm: "280px", md: "500px", lg: "750px" },
-            marginRight: { xs: "10px", sm: "40px", md: "80px", lg: "40px" },
-            marginTop: { xs: "10px", sm: "80px", md: "0px", lg: "10px" },
-            zIndex: 3,
-          }}
-          spacing={2}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontFamily: "Outfit",
-              color: "#333",
-              marginBottom: 2,
-              textAlign: "center",
-              fontWeight: "bold",
-              fontSize: {
-                xs: "1.5rem",
-                sm: "2rem",
-                md: "2.5rem",
-                lg: "2.5rem",
-              },
-            }}
-          >
+        <Stack sx={styles.loginBox2} spacing={2}>
+          <Typography variant="h4" sx={styles.welcomeText}>
             Welcome back!
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "Outfit",
-              color: "#656565",
-              marginBottom: 2,
-              textAlign: "center",
-              fontSize: {
-                xs: "0.9rem",
-                sm: "1rem",
-                md: "1.1rem",
-                lg: "1rem",
-              },
-            }}
-          >
+          <Typography variant="body1" sx={styles.boxInput}>
             Enter your details to login
           </Typography>
           <TextField
@@ -397,15 +144,7 @@ const LoginEmail = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              marginBottom: 2,
-              borderRadius: "8px",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#FFF",
-                borderRadius: "8px",
-                fontFamily: "outfit",
-              },
-            }}
+            sx={styles.phoneInput}
           />
 
           <TextField
@@ -434,15 +173,7 @@ const LoginEmail = () => {
                 </InputAdornment>
               ),
             }}
-            sx={{
-              marginBottom: 2,
-              borderRadius: "8px",
-              "& .MuiOutlinedInput-root": {
-                backgroundColor: "#FFF",
-                borderRadius: "8px",
-                fontFamily: "Outfit",
-              },
-            }}
+            sx={styles.phoneInput}
           />
 
           <Stack
@@ -451,33 +182,11 @@ const LoginEmail = () => {
             alignItems="center"
           >
             <FormControlLabel
-              control={
-                <Checkbox
-                  sx={{
-                    color: "#959595",
-                    "&.Mui-checked": {
-                      color: "#FF6B28",
-                    },
-                  }}
-                />
-              }
+              control={<Checkbox sx={styles.Checkbox1} />}
               label="Remember Me"
-              sx={{
-                "& .MuiFormControlLabel-label": {
-                  color: "#959595",
-                  fontFamily: "Outfit",
-                },
-              }}
+              sx={styles.boxInput}
             />
-            <Link
-              href="http://localhost:5173/LoginOtpEmail"
-              underline="none"
-              sx={{
-                color: "#FF2D1F",
-                fontFamily: "Outfit",
-                textDecoration: "underline",
-              }}
-            >
+            <Link to="/LoginOtpEmail" style={styles.resend}>
               Forgot Password?
             </Link>
           </Stack>
@@ -485,67 +194,15 @@ const LoginEmail = () => {
           <Button
             variant="contained"
             fullWidth
-            sx={{
-              background: "linear-gradient(to bottom, #FFDD44, #FF5500)",
-              color: "#fff",
-              marginBottom: 2,
-              height: "45px",
-              fontSize: {
-                xs: "0.9rem",
-                sm: "1rem",
-                md: "1.1rem",
-                lg: "1rem",
-                fontWeight: "normal",
-                textTransform: "none",
-              },
-            }}
+            sx={styles.sendOtpButton}
             onClick={handleSendOtpClick}
           >
             Send OTP
-            
           </Button>
 
           <Typography
             variant="body2"
-            sx={{
-              color: "#666",
-              fontFamily: "Nunito",
-              textAlign: "center",
-              marginBottom: 2,
-              position: "relative",
-              fontSize: {
-                xs: "0.8rem",
-                sm: "0.9rem",
-                md: "1rem",
-                lg: "1.1rem",
-              },
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: "0",
-                right: "50%",
-                top: "50%",
-                backgroundImage: "url(Line.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "1px",
-                width: "38%",
-                transform: "translateY(-50%)",
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                left: "62%",
-                right: "0",
-                top: "50%",
-                backgroundImage: "url(Line.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "1px",
-                width: "40%",
-                transform: "translateY(-50%)",
-              },
-            }}
+            sx={styles.orLoginText}
           >
             Or login with
           </Typography>
@@ -576,15 +233,7 @@ const LoginEmail = () => {
             ].map((option, index) => (
               <Box
                 key={index}
-                sx={{
-                  backgroundColor: "white",
-                  width: { xs: "100%", sm: "48%" },
-                  padding: 2,
-                  borderRadius: "8px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
+                sx={styles.socialLoginButton}
               >
                 <img
                   src={option.src}
@@ -603,22 +252,12 @@ const LoginEmail = () => {
 
           <Typography
             variant="body2"
-            sx={{
-              color: "#000000",
-              fontFamily: "Outfit",
-              textAlign: "center",
-              fontSize: {
-                xs: "0.8rem",
-                sm: "0.9rem",
-                md: "1rem",
-                lg: "1.1rem",
-              },
-            }}
+            sx={styles.createAccountText}
           >
             Don't have an Account?{" "}
-            <a href="http://localhost:5173/CreateAccount" style={{ color: "#FF0000", fontFamily: "Outfit" }}>
+            <Link to="/CreateAccount" style={styles.resend}>
               Create Account
-            </a>
+            </Link>
           </Typography>
         </Stack>
       </Container>

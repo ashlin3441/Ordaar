@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
   Typography,
@@ -16,7 +16,6 @@ import { styles } from "../styles/Login_Styles";
 import countries from "country-codes-list";
 
 const Login_0 = () => {
-  const [countryCode, setCountryCode] = useState("+1");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
   const [countryCodes, setCountryCodes] = useState(["+91"]);
@@ -24,7 +23,10 @@ const Login_0 = () => {
 
   useEffect(() => {
     // Fetch country codes dynamically
-    const countryList = countries.customList("countryCode", "+{countryCallingCode} ({countryNameEn})");
+    const countryList = countries.customList(
+      "countryCode",
+      "+{countryCallingCode} ({countryNameEn})"
+    );
     const countryArray = Object.entries(countryList).map(([code, label]) => ({
       value: `+ ${code}`, // Ensure + sign is always included
       label: ` ${label}`, // Display the + sign properly
@@ -39,7 +41,7 @@ const Login_0 = () => {
     if (!phoneNumber || phoneNumber.length < 10) {
       setError("Please enter a valid phone number");
     } else {
-      setError("");
+      setError("Otp Sent");
       navigate("/Login_otp");
     }
   };
@@ -101,40 +103,14 @@ const Login_0 = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{ position: "absolute", width: "100%" }}
+          sx={styles.positionwidth}
         >
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            lg={3}
-            sx={{
-              position: {
-                xs: "static",
-                sm: "absolute",
-                md: "absolute",
-                lg: "absolute",
-              },
-              top: { xs: "2px", sm: "40px", md: "-20px", lg: "-40px" },
-              left: { xs: "0", sm: "62%", md: "62%", lg: "66%" },
-              transform: {
-                xs: "none",
-                sm: "translateX(-50%)",
-                md: "translateX(-50%)",
-                lg: "translateX(-50%)",
-              },
-              width: { xs: "50%", sm: "32%", md: "26%", lg: "25%" },
-              maxWidth: "100%",
-              height: "auto",
-              zIndex: 1,
-            }}
-          >
+          <Grid item xs={12} sm={6} md={3} lg={3} sx={styles.capImage}>
             <Box
               component="img"
               src="cap.png"
               alt="Background"
-              sx={{ width: "100%", height: "auto" }}
+              sx={styles.widthheight}
             />
           </Grid>
         </Grid>
@@ -143,40 +119,14 @@ const Login_0 = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{ position: "absolute", width: "100%" }}
+          sx={styles.positionwidth}
         >
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            lg={3}
-            sx={{
-              position: {
-                xs: "static",
-                sm: "absolute",
-                md: "absolute",
-                lg: "absolute",
-              },
-              top: { xs: "2px", sm: "40px", md: "500px", lg: "570px" },
-              left: { xs: "0", sm: "62%", md: "86%", lg: "86%" },
-              transform: {
-                xs: "none",
-                sm: "translateX(-50%)",
-                md: "translateX(-50%)",
-                lg: "translateX(-50%)",
-              },
-              width: { xs: "50%", sm: "32%", md: "3%", lg: "3%" },
-              maxWidth: "100%",
-              height: "auto",
-              zIndex: 1,
-            }}
-          >
+          <Grid item xs={12} sm={6} md={3} lg={3} sx={styles.PageChange}>
             <Box
               component="img"
               src="bottom_1.png"
               alt="Background"
-              sx={{ width: "100%", height: "auto" }}
+              sx={styles.widthheight}
             />
           </Grid>
         </Grid>
@@ -185,36 +135,31 @@ const Login_0 = () => {
           <Typography variant="h4" sx={styles.welcomeText}>
             Welcome back!
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              fontFamily: "Outfit",
-              color: "#656565",
-              marginBottom: 2,
-              textAlign: "center",
-              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem", lg: "1rem" },
-            }}
-          >
+          <Typography variant="body1" sx={styles.boxInput}>
             Enter your phone number to login into this account.
           </Typography>
 
-          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" sx={{ marginBottom: 4, marginTop: 8 }}>
-          {/* Searchable Country Code Dropdown */}
-          <Autocomplete
-            options={countryCodes}
-            getOptionLabel={(option) => option.label}
-            renderInput={(params) => (
-              <TextField {...params} label="" variant="outlined" fullWidth />
-            )}
-            onChange={( newValue) => {
-              if (newValue) setCountryCode(newValue);
-            }}
-            disableClearable
-            sx={styles.phoneInput}
-            ListboxProps={{
-              sx: { width: "350px" }, // Enlarged dropdown list
-            }}
-          />
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={2}
+            alignItems="center"
+          >
+            {/* Searchable Country Code Dropdown */}
+            <Autocomplete
+              options={countryCodes}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField {...params} label="" variant="outlined" fullWidth />
+              )}
+              onChange={(newValue) => {
+                if (newValue) setCountryCodes(newValue);
+              }}
+              disableClearable
+              sx={styles.phoneInput}
+              ListboxProps={{
+                sx: { width: "350px" }, // Enlarged dropdown list
+              }}
+            />
 
             <TextField
               sx={styles.phoneInput}
@@ -229,7 +174,7 @@ const Login_0 = () => {
                     <img
                       src="phone.png"
                       alt="Phone Icon"
-                      style={{ width: "20px", height: "20px" }}
+                      style={styles.iconwidth}
                     />
                   </InputAdornment>
                 ),
@@ -276,7 +221,7 @@ const Login_0 = () => {
                 <img
                   src={option.src}
                   alt={option.alt}
-                  style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                  style={styles.iconwidth}
                 />
                 <Typography
                   variant="body2"
@@ -290,14 +235,7 @@ const Login_0 = () => {
 
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <Link
-              to="/CreateAccount"
-              style={{
-                color: "#FF0000",
-                fontFamily: "Outfit",
-                textDecoration: "none",
-              }}
-            >
+            <Link to="/CreateAccount" style={styles.resend}>
               Create Account
             </Link>
           </Typography>

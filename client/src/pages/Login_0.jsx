@@ -1,172 +1,188 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate,Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Container,
   TextField,
   Button,
-  IconButton,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
   InputAdornment,
+  Stack,
+  Grid,
+  Autocomplete,
 } from "@mui/material";
-import { Email, Facebook, Phone } from "@mui/icons-material";
 import BackgroundLayout from "./BackgroundLayout";
+import { styles } from "../styles/Login_Styles";
+import countries from "country-codes-list";
 
 const Login_0 = () => {
-  const [countryCode, setCountryCode] = useState("+1"); // Default country code
+  const [countryCode, setCountryCode] = useState("+1");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [error, setError] = useState("");
+  const [countryCodes, setCountryCodes] = useState(["+91"]);
+  const navigate = useNavigate();
 
-  const handleCountryCodeChange = (event) => {
-    setCountryCode(event.target.value);
+  useEffect(() => {
+    // Fetch country codes dynamically
+    const countryList = countries.customList("countryCode", "+{countryCallingCode} ({countryNameEn})");
+    const countryArray = Object.entries(countryList).map(([code, label]) => ({
+      value: `+ ${code}`, // Ensure + sign is always included
+      label: ` ${label}`, // Display the + sign properly
+    }));
+
+    setCountryCodes(countryArray);
+  }, []);
+
+  const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
+
+  const handleSendOtpClick = () => {
+    if (!phoneNumber || phoneNumber.length < 10) {
+      setError("Please enter a valid phone number");
+    } else {
+      setError("");
+      navigate("/Login_otp");
+    }
   };
-
   return (
     <BackgroundLayout>
-      <Container
-        maxWidth={false}
-        sx={{
-          minHeight: "100vh",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 5%",
-        }}
-      >
-        <Box
-          sx={{
-            width: "30%",
-            height: "10%",
-            marginBottom: "550px",
-            color: "white",
-          }}
-        >
-          <Typography
-            variant="h3"
-            sx={{
-              fontWeight: "bold",
-              marginBottom: "0px",
-              marginLeft: "20px",
-              fontFamily: "Outfit",
-            }}
-          >
+      <Container maxWidth={false} sx={styles.container}>
+        <Stack spacing={-1} sx={styles.header}>
+          <Typography variant="h3" sx={styles.title}>
             Orddar
           </Typography>
-          <Typography
-            variant="subtitle1"
-            sx={{ marginTop: "0px", fontSize: "20px", fontFamily: "Outfit" }}
-          >
+          <Typography variant="subtitle1" sx={styles.subtitle}>
             Perfect food companion
           </Typography>
+        </Stack>
 
-          <Box
-            component="img"
-            src="amico.png"
-            alt="Delivery Instructions"
+        <Grid container justifyContent="center" sx={styles.imageContainer}>
+          <Grid item xs={12} sm={8} md={6} lg={5} xl={4}>
+            <Box
+              component="img"
+              src="amico.png"
+              alt="Delivery Instructions"
+              sx={styles.image}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid
+          container
+          direction="column"
+          spacing={2}
+          sx={styles.textContainer}
+        >
+          <Grid item>
+            <Typography variant="h4" sx={styles.exploreText}>
+              Explore
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant="h5" sx={styles.bestFoodsText}>
+              Best Foods & Restaurants
+            </Typography>
+          </Grid>
+          <Grid item>
+            <Box>
+              {[
+                "When an unknown printer took a galley of",
+                "type and scrambled it to make a type",
+                "specimen book.",
+              ].map((text, index) => (
+                <Typography key={index} variant="body1" sx={styles.bodyText}>
+                  {text}
+                </Typography>
+              ))}
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          sx={{ position: "absolute", width: "100%" }}
+        >
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg={3}
             sx={{
-              position: "absolute",
-              top: "140px",
-              left: "165px",
-              width: "420px",
+              position: {
+                xs: "static",
+                sm: "absolute",
+                md: "absolute",
+                lg: "absolute",
+              },
+              top: { xs: "2px", sm: "40px", md: "-20px", lg: "-40px" },
+              left: { xs: "0", sm: "62%", md: "62%", lg: "66%" },
+              transform: {
+                xs: "none",
+                sm: "translateX(-50%)",
+                md: "translateX(-50%)",
+                lg: "translateX(-50%)",
+              },
+              width: { xs: "50%", sm: "32%", md: "26%", lg: "25%" },
+              maxWidth: "100%",
               height: "auto",
               zIndex: 1,
             }}
-          />
-        </Box>
+          >
+            <Box
+              component="img"
+              src="cap.png"
+              alt="Background"
+              sx={{ width: "100%", height: "auto" }}
+            />
+          </Grid>
+        </Grid>
 
-        <Box
-          sx={{
-            width: "20%",
-            textAlign: "left",
-            zIndex: 3,
-            color: "#fff",
-            position: "absolute",
-            left: 210,
-            bottom: 110,
-            margin: "20px",
-          }}
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          sx={{ position: "absolute", width: "100%" }}
         >
-          <Typography
-            variant="h4"
+          <Grid
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg={3}
             sx={{
-              fontFamily: "Outfit",
-              fontWeight: "bold",
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-              marginTop: 1,
-              textAlign: "center",
+              position: {
+                xs: "static",
+                sm: "absolute",
+                md: "absolute",
+                lg: "absolute",
+              },
+              top: { xs: "2px", sm: "40px", md: "500px", lg: "570px" },
+              left: { xs: "0", sm: "62%", md: "86%", lg: "86%" },
+              transform: {
+                xs: "none",
+                sm: "translateX(-50%)",
+                md: "translateX(-50%)",
+                lg: "translateX(-50%)",
+              },
+              width: { xs: "50%", sm: "32%", md: "3%", lg: "3%" },
+              maxWidth: "100%",
+              height: "auto",
+              zIndex: 1,
             }}
           >
-            Explore
-          </Typography>
-          <Typography
-            variant="h5"
-            sx={{
-              fontWeight: "bold",
-              fontFamily: "Outfit",
-              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
-              marginTop: 1,
-              textAlign: "left",
-            }}
-          >
-            Best Foods & Restaurants
-          </Typography>
-        </Box>
+            <Box
+              component="img"
+              src="bottom_1.png"
+              alt="Background"
+              sx={{ width: "100%", height: "auto" }}
+            />
+          </Grid>
+        </Grid>
 
-        <Box
-          sx={{
-            width: "20%",
-            textAlign: "left",
-            zIndex: 3,
-            color: "#fff",
-            position: "absolute",
-            left: 200,
-            bottom: 35,
-            margin: "20px",
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{ fontFamily: "Outfit", marginTop: 1, textAlign: "center",fontSize:'15px' }}
-          >
-            When an unknown printer took a galley of type and scrambled it to
-            make a type specimen book.
-          </Typography>
-        </Box>
-        <Box
-          component="img"
-          src="cap.png"
-          alt="Background"
-          sx={{
-            position: "absolute",
-            top: "30px",
-            left: "910px",
-            width: "350px",
-            height: "auto",
-            zIndex: 1,
-          }}
-        />
-        <Box
-          sx={{
-            width: "29%",
-            minHeight: "60vh",
-            backgroundColor: "rgba(255, 255, 255, 0.4)",
-            borderRadius: 6,
-            padding: 4,
-            marginRight: 20,
-            zIndex: 3,
-          }}
-        >
-          <Typography
-            variant="h4"
-            sx={{
-              fontFamily: "Outfit",
-              color: "#333",
-              marginBottom: 2,
-              textAlign: "center",
-              fontWeight: "bold",
-            }}
-          >
+        <Stack sx={styles.loginBox} spacing={2}>
+          <Typography variant="h4" sx={styles.welcomeText}>
             Welcome back!
           </Typography>
           <Typography
@@ -176,66 +192,37 @@ const Login_0 = () => {
               color: "#656565",
               marginBottom: 2,
               textAlign: "center",
+              fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem", lg: "1rem" },
             }}
           >
             Enter your phone number to login into this account.
           </Typography>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              marginBottom: 4,
-              marginTop: 8,
+          <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems="center" sx={{ marginBottom: 4, marginTop: 8 }}>
+          {/* Searchable Country Code Dropdown */}
+          <Autocomplete
+            options={countryCodes}
+            getOptionLabel={(option) => option.label}
+            renderInput={(params) => (
+              <TextField {...params} label="" variant="outlined" fullWidth />
+            )}
+            onChange={( newValue) => {
+              if (newValue) setCountryCode(newValue);
             }}
-          >
-            <FormControl sx={{ marginRight: 2, minWidth: 70 }}>
-              <Select
-                sx={{
-                  backgroundColor: "white",
-                  height: "50px",
-                  borderRadius: "8px",
-                  boxShadow: "none",
-                  "& .MuiOutlinedInput-notchedOutline": {
-                    border: "none",
-                  },
-                  "&:focus": {
-                    borderRadius: "4px",
-                  },
-                }}
-                labelId="country-code-label"
-                value={countryCode}
-                onChange={handleCountryCodeChange}
-                label="Country Code"
-              >
-                <MenuItem value="+1">+1 (USA)</MenuItem>
-                <MenuItem value="+91">+91 (India)</MenuItem>
-                <MenuItem value="+44">+44 (UK)</MenuItem>
-                <MenuItem value="+61">+61 (Australia)</MenuItem>
-              </Select>
-            </FormControl>
+            disableClearable
+            sx={styles.phoneInput}
+            ListboxProps={{
+              sx: { width: "350px" }, // Enlarged dropdown list
+            }}
+          />
 
             <TextField
-              sx={{
-                backgroundColor: "white",
-                fontFamily: "Outfit",
-                height: "50px",
-                borderRadius: "8px",
-                boxShadow: "none",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  border: "none",
-                },
-                "& input": {
-                  fontFamily: "Outfit",
-                },
-                "& .MuiInputBase-input::placeholder": {
-                  fontFamily: "Outfit",
-                  textAlign: "left",
-                },
-              }}
+              sx={styles.phoneInput}
               fullWidth
               placeholder="Enter Phone Number"
               variant="outlined"
+              value={phoneNumber}
+              onChange={handlePhoneNumberChange}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -248,131 +235,75 @@ const Login_0 = () => {
                 ),
               }}
             />
-          </Box>
-
+          </Stack>
+          {error && <Typography sx={styles.errorMessage}>{error}</Typography>}
           <Button
             variant="contained"
             fullWidth
-            sx={{
-              background: "linear-gradient(to bottom, #FFDD44, #FF5500)",
-              color: "#fff",
-              marginBottom: 2,
-              height: "45px",
-            }}
+            sx={styles.sendOtpButton}
+            onClick={handleSendOtpClick}
           >
-            Send OTP
+            Send OTP {">"}
           </Button>
 
-          <Typography
-            variant="body2"
-            sx={{
-              color: "#666",
-              fontFamily: "Nunito",
-              textAlign: "center",
-              marginBottom: 2,
-              position: "relative",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                left: "0",
-                right: "50%",
-                top: "50%",
-                backgroundImage: "url(Line.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "1px",
-                width: "38%",
-                transform: "translateY(-50%)",
-              },
-              "&::after": {
-                content: '""',
-                position: "absolute",
-                left: "62%",
-                right: "0",
-                top: "50%",
-                backgroundImage: "url(Line.png)",
-                backgroundSize: "cover",
-                backgroundRepeat: "no-repeat",
-                height: "1px",
-                width: "40%",
-                transform: "translateY(-50%)",
-              },
-            }}
-          >
+          <Typography variant="body2" sx={styles.orLoginText}>
             Or login with
           </Typography>
 
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              marginBottom: 2,
-              gap: 2,
-              height: "45px",
-            }}
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            justifyContent="space-between"
+            marginBottom={2}
+            gap={2}
+            sx={{ height: "45px" }}
           >
-            <Box
-              sx={{
-                backgroundColor: "white",
-                width: "48%",
-                padding: 2,
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src="gmail.png"
-                alt="Email Icon"
-                style={{ width: "20px", height: "17px", marginRight: "8px" }}
-              />
-              <Typography
-                variant="body2"
-                sx={{ color: "red", fontFamily: "Outfit" }}
-              >
-                Email
-              </Typography>
-            </Box>
+            {[
+              {
+                src: "gmail.png",
+                alt: "Email Icon",
+                text: "Email",
+                color: "red",
+              },
+              {
+                src: "facebook.png",
+                alt: "Facebook Icon",
+                text: "Facebook",
+                color: "#3B7DED",
+              },
+            ].map((option, index) => (
+              <Box key={index} sx={styles.socialLoginButton}>
+                <img
+                  src={option.src}
+                  alt={option.alt}
+                  style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                />
+                <Typography
+                  variant="body2"
+                  sx={{ color: option.color, fontFamily: "Outfit" }}
+                >
+                  {option.text}
+                </Typography>
+              </Box>
+            ))}
+          </Stack>
 
-            <Box
-              sx={{
-                backgroundColor: "white",
-                width: "48%",
-                padding: 2,
-                borderRadius: "8px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <img
-                src="facebook.png"
-                alt="Facebook Icon"
-                style={{ width: "20px", height: "20px", marginRight: "8px" }}
-              />
-              <Typography
-                variant="body2"
-                sx={{ color: "#3B7DED", fontFamily: "Outfit" }}
-              >
-                Facebook
-              </Typography>
-            </Box>
-          </Box>
-
-          <Typography
-            variant="body2"
-            sx={{ color: "#000000", fontFamily: "Outfit", textAlign: "center" }}
-          >
+          <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <a href="#" style={{ color: "#FF0000", fontFamily: "Outfit" }}>
+            <Link
+              to="/CreateAccount"
+              style={{
+                color: "#FF0000",
+                fontFamily: "Outfit",
+                textDecoration: "none",
+              }}
+            >
               Create Account
-            </a>
+            </Link>
           </Typography>
-        </Box>
+        </Stack>
       </Container>
     </BackgroundLayout>
   );
 };
-
 export default Login_0;

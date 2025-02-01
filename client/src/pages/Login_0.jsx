@@ -10,6 +10,8 @@ import {
   Stack,
   Grid,
   Autocomplete,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
@@ -18,18 +20,19 @@ import countries from "country-codes-list";
 const Login_0 = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
+  const [selectedCountryCode, setSelectedCountryCode] = useState(null);
   const [countryCodes, setCountryCodes] = useState(["+91"]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch country codes dynamically
     const countryList = countries.customList(
       "countryCode",
       "+{countryCallingCode} ({countryNameEn})"
     );
     const countryArray = Object.entries(countryList).map(([code, label]) => ({
-      value: `+ ${code}`, // Ensure + sign is always included
-      label: ` ${label}`, // Display the + sign properly
+      value: `+ ${code}`,
+      label: ` ${label}`,
     }));
 
     setCountryCodes(countryArray);
@@ -38,11 +41,16 @@ const Login_0 = () => {
   const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
 
   const handleSendOtpClick = () => {
-    if (!phoneNumber || phoneNumber.length < 10) {
+    if (!selectedCountryCode) {
+      setError("Please select a country code");
+      setOpenSnackbar(true);
+    } else if (!phoneNumber || phoneNumber.length < 10) {
       setError("Please enter a valid phone number");
+      setOpenSnackbar(true);
     } else {
       setError("Otp Sent");
-      navigate("/Login_otp");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate("/Login_otp"), 2000);
     }
   };
   return (
@@ -144,21 +152,17 @@ const Login_0 = () => {
             spacing={2}
             alignItems="center"
           >
-            {/* Searchable Country Code Dropdown */}
             <Autocomplete
               options={countryCodes}
               getOptionLabel={(option) => option.label}
               renderInput={(params) => (
                 <TextField {...params} label="" variant="outlined" fullWidth />
               )}
-              onChange={(newValue) => {
-                if (newValue) setCountryCodes(newValue);
+              onChange={(_, newValue) => {
+                setSelectedCountryCode(newValue);
               }}
               disableClearable
               sx={styles.phoneInput}
-              ListboxProps={{
-                sx: { width: "350px" }, // Enlarged dropdown list
-              }}
             />
 
             <TextField
@@ -181,7 +185,6 @@ const Login_0 = () => {
               }}
             />
           </Stack>
-          {error && <Typography sx={styles.errorMessage}>{error}</Typography>}
           <Button
             variant="contained"
             fullWidth
@@ -225,14 +228,12 @@ const Login_0 = () => {
                 />
                 <Typography
                   variant="body2"
-                  sx={{ color: option.color, fontFamily: "Outfit" }}
-                >
+                  sx={{ color: option.color, fontFamily: "Outfit" }}>
                   {option.text}
                 </Typography>
               </Box>
             ))}
           </Stack>
-
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
             <Link to="/CreateAccount" style={styles.resend}>
@@ -241,6 +242,15 @@ const Login_0 = () => {
           </Typography>
         </Stack>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert severity="error" onClose={() => setOpenSnackbar(false)}>
+          {error}
+        </Alert>
+      </Snackbar>
     </BackgroundLayout>
   );
 };

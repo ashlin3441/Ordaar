@@ -12,6 +12,8 @@ import {
   FormControlLabel,
   Checkbox,
   IconButton,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
@@ -22,6 +24,10 @@ import { styles } from "../styles/Login_Styles";
 const LoginEmail = () => {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -32,7 +38,25 @@ const LoginEmail = () => {
   };
   const navigate = useNavigate();
   const handleSendOtpClick = () => {
-    navigate("/LoginOtpEmail");
+    if (!email.includes("@") || email.length < 5) {
+      setErrorMessage("Please enter a valid email address.");
+      setOpenSnackbar(true);
+      return;
+    }
+    if (password.length < 6) {
+      setErrorMessage("Password must be at least 6 characters long.");
+      setOpenSnackbar(true);
+      return;
+    }
+    else{
+      setErrorMessage("Logging in..");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate("/LoginOtpEmail"), 2000);
+    }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -133,13 +157,15 @@ const LoginEmail = () => {
             variant="outlined"
             placeholder="Email ID"
             fullWidth
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <img
                     src="mail_icon.png"
                     alt="icon"
-                    style={{ width: "20px", height: "20px" }}
+                    style={styles.iconwidth}
                   />
                 </InputAdornment>
               ),
@@ -151,6 +177,8 @@ const LoginEmail = () => {
             variant="outlined"
             placeholder="Password"
             fullWidth
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type={showPassword ? "text" : "password"}
             InputProps={{
               startAdornment: (
@@ -158,7 +186,7 @@ const LoginEmail = () => {
                   <img
                     src="password_icon.png"
                     alt="icon"
-                    style={{ width: "20px", height: "20px" }}
+                    style={styles.iconwidth}
                   />
                 </InputAdornment>
               ),
@@ -200,10 +228,7 @@ const LoginEmail = () => {
             Send OTP
           </Button>
 
-          <Typography
-            variant="body2"
-            sx={styles.orLoginText}
-          >
+          <Typography variant="body2" sx={styles.orLoginText}>
             Or login with
           </Typography>
 
@@ -231,10 +256,7 @@ const LoginEmail = () => {
                 color: "#3B7DED",
               },
             ].map((option, index) => (
-              <Box
-                key={index}
-                sx={styles.socialLoginButton}
-              >
+              <Box key={index} sx={styles.socialLoginButton}>
                 <img
                   src={option.src}
                   alt={option.alt}
@@ -250,10 +272,7 @@ const LoginEmail = () => {
             ))}
           </Stack>
 
-          <Typography
-            variant="body2"
-            sx={styles.createAccountText}
-          >
+          <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
             <Link to="/CreateAccount" style={styles.resend}>
               Create Account
@@ -261,6 +280,19 @@ const LoginEmail = () => {
           </Typography>
         </Stack>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </BackgroundLayout>
   );
 };

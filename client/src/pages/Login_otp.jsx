@@ -1,25 +1,27 @@
 import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate,Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Container,
   TextField,
   Button,
-  InputAdornment,
   Stack,
   Grid2,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
 
 const Login_otp = () => {
   const navigate = useNavigate();
-
   const theme = useTheme();
   const [otpValues, setOtpValues] = useState(Array(6).fill(""));
   const [message, setMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleChange = (index, event) => {
     const newOtpValues = [...otpValues];
@@ -30,13 +32,25 @@ const Login_otp = () => {
       document.getElementById(`otp-input-${index + 1}`).focus();
     }
   };
-
+  const handleResendClick = (event) => {
+    event.preventDefault(); 
+    setMessage("OTP sent successfully!"); 
+    setSnackbarSeverity("success"); 
+    setOpenSnackbar(true); 
+  };
   const handleSubmit = () => {
     const enteredOtp = otpValues.join("");
     const expectedOtp = "123456";
 
     if (enteredOtp === expectedOtp) {
-      navigate("/LoginEmail");
+      setMessage("Otp Verified Successfully");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate("/LoginEmail"), 2000);
+    } else {
+      setMessage("Invalid OTP. Please try again.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     }
   };
   return (
@@ -99,20 +113,14 @@ const Login_otp = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{
-            position: "absolute",
-            width: "100%",
-          }}
+          sx={styles.positionwidth}
         >
           <Grid2 item xs={12} sm={6} md={3} lg={3} sx={styles.capImage}>
             <Box
               component="img"
               src="cap.png"
               alt="Background"
-              sx={{
-                width: "100%",
-                height: "auto",
-              }}
+              sx={styles.widthheight}
             />
           </Grid2>
         </Grid2>
@@ -120,20 +128,14 @@ const Login_otp = () => {
           container
           justifyContent="center"
           alignItems="center"
-          sx={{
-            position: "absolute",
-            width: "100%",
-          }}
+          sx={styles.positionwidth}
         >
           <Grid2 item xs={12} sm={6} md={3} lg={3} sx={styles.PageChange}>
             <Box
               component="img"
               src="bottom_2.png"
               alt="Background"
-              sx={{
-                width: "100%",
-                height: "auto",
-              }}
+              sx={styles.widthheight}
             />
           </Grid2>
         </Grid2>
@@ -185,7 +187,7 @@ const Login_otp = () => {
           </Button>
           <Typography variant="body2" sx={styles.recieve}>
             Didn't receive the code?{" "}
-            <Link to=""  sx={styles.resend}>
+            <Link to="" onClick={handleResendClick} sx={styles.resend}>
               Resend
             </Link>
           </Typography>
@@ -242,6 +244,19 @@ const Login_otp = () => {
           </Typography>
         </Stack>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity={snackbarSeverity} // Dynamic severity (success or error)
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </BackgroundLayout>
   );
 };

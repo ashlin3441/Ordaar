@@ -12,6 +12,8 @@ import {
   Checkbox,
   IconButton,
   Autocomplete,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
@@ -29,7 +31,9 @@ const CreateAccount = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const [countryCodes, setCountryCodes] = useState([]);
   const navigate = useNavigate();
 
@@ -67,17 +71,24 @@ const CreateAccount = () => {
     if (password.length < 6)
       return "Password must be at least 6 characters long.";
     if (password !== confirmPassword) return "Passwords do not match.";
+    if (!agreeToTerms) return "You must agree to the Terms & Conditions.";
     return "";
   };
 
   const handleSignUp = () => {
     const errorMsg = validateForm();
     if (errorMsg) {
-      setError(errorMsg);
+      setErrorMessage(errorMsg);
+      setOpenSnackbar(true);
     } else {
-      setError("Account Created Successfully. Please Login to continue.");
-      navigate("/LoginEmail");
+      setErrorMessage("Account Created Successfully. Please Login to continue.");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate("/LoginEmail"), 2000);
     }
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -311,7 +322,7 @@ const CreateAccount = () => {
             />
 
             <FormControlLabel
-              control={<Checkbox sx={styles.Checkbox1} />}
+              control={<Checkbox checked={agreeToTerms} onChange={(e) => setAgreeToTerms(e.target.checked)} />}
               label={
                 <Typography variant="body2" sx={styles.recieve}>
                   By signing up you agree to our{" "}
@@ -325,7 +336,7 @@ const CreateAccount = () => {
                 </Typography>
               }
             />
-            {error && <Typography sx={styles.errorMessage}>{error}</Typography>}
+
             <Button fullWidth sx={styles.sendOtpButton} onClick={handleSignUp}>
               Sign Up
             </Button>
@@ -339,6 +350,19 @@ const CreateAccount = () => {
           </Stack>
         </Stack>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert
+          onClose={handleCloseSnackbar}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {errorMessage}
+        </Alert>
+      </Snackbar>
     </BackgroundLayout>
   );
 };

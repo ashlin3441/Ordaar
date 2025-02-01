@@ -1,29 +1,50 @@
 import React, { useState } from "react";
 import { useTheme } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Container,
   TextField,
   Button,
-  FormControl,
-  Select,
-  MenuItem,
-  InputAdornment,
   Stack,
   Grid2,
-  Link,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
 
 const Login_otp = () => {
   const navigate = useNavigate();
-  const handleVerifyOtpClick = () => {
-    navigate("/PasswordReset");
-  };
   const theme = useTheme();
+  const [otpValues, setOtpValues] = useState(Array(6).fill(""));
+  const [message, setMessage] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+
+  const handleChange = (index, event) => {
+    const newOtpValues = [...otpValues];
+    newOtpValues[index] = event.target.value;
+    setOtpValues(newOtpValues);
+
+    if (event.target.value.length === 1 && index < 5) {
+      document.getElementById(`otp-input-${index + 1}`).focus();
+    }
+  };
+
+  const handleSubmit = () => {
+    const enteredOtp = otpValues.join("");
+    const expectedOtp = "123456";
+
+    if (enteredOtp === expectedOtp) {
+      setMessage("Otp Verified Successfully");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate("/LoginEmail"), 2000);
+    } else {
+      setMessage("Invalid OTP. Please try again.");
+      setOpenSnackbar(true);
+    }
+  };
   return (
     <BackgroundLayout>
       <Container maxWidth={false} sx={styles.container}>
@@ -55,13 +76,13 @@ const Login_otp = () => {
         >
           <Grid2 item>
             <Typography variant="h4" sx={styles.GroceryText}>
-              Book Dining
+            Book Dining
             </Typography>
           </Grid2>
 
           <Grid2 item>
             <Typography variant="h5" sx={styles.bestFoodsText}>
-              in Best Restaurants
+            in Best Restaurants
             </Typography>
           </Grid2>
 
@@ -104,7 +125,7 @@ const Login_otp = () => {
           <Grid2 item xs={12} sm={6} md={3} lg={3} sx={styles.PageChange}>
             <Box
               component="img"
-              src="bottom_3.png"
+              src="bottom_2.png"
               alt="Background"
               sx={styles.widthheight}
             />
@@ -116,9 +137,9 @@ const Login_otp = () => {
             Welcome back!
           </Typography>
           <Typography variant="body1" sx={styles.boxInput}>
-            we have sent a code to your Email.
-            <br />
+            we have sent a code to your email
           </Typography>
+
           <Stack
             direction="row"
             spacing={2}
@@ -128,7 +149,10 @@ const Login_otp = () => {
             {[...Array(6)].map((_, index) => (
               <TextField
                 key={index}
+                id={`otp-input-${index}`}
                 variant="outlined"
+                value={otpValues[index]}
+                onChange={(event) => handleChange(index, event)}
                 inputProps={{
                   maxLength: 1,
                   sx: {
@@ -147,13 +171,13 @@ const Login_otp = () => {
             variant="contained"
             fullWidth
             sx={styles.sendOtpButton}
-            onClick={handleVerifyOtpClick}
+            onClick={handleSubmit}
           >
             Verify OTP
           </Button>
           <Typography variant="body2" sx={styles.recieve}>
             Didn't receive the code?{" "}
-            <Link href="#" sx={styles.resend}>
+            <Link to="" sx={styles.resend}>
               Resend
             </Link>
           </Typography>
@@ -201,6 +225,7 @@ const Login_otp = () => {
               </Box>
             ))}
           </Stack>
+
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
             <Link to="/CreateAccount" style={styles.resend}>
@@ -209,7 +234,21 @@ const Login_otp = () => {
           </Typography>
         </Stack>
       </Container>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000}
+        onClose={() => setOpenSnackbar(false)}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </BackgroundLayout>
   );
 };
+
 export default Login_otp;

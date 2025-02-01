@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import BackgroundLayout from "./BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
+import { routes } from "../routes/routes";
 
 const Login_otp = () => {
   const navigate = useNavigate();
@@ -39,7 +40,7 @@ const Login_otp = () => {
     if (enteredOtp === expectedOtp) {
       setMessage("Otp Verified Successfully");
       setOpenSnackbar(true);
-      setTimeout(() => navigate("/LoginEmail"), 2000);
+      setTimeout(() => navigate(routes.loginemail), 2000);
     } else {
       setMessage("Invalid OTP. Please try again.");
       setOpenSnackbar(true);
@@ -214,7 +215,7 @@ const Login_otp = () => {
                 <img
                   src={option.src}
                   alt={option.alt}
-                  style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                  style={styles.iconwidth}
                 />
                 <Typography
                   variant="body2"
@@ -228,7 +229,7 @@ const Login_otp = () => {
 
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <Link to="/CreateAccount" style={styles.resend}>
+            <Link to={routes.createAccount} style={styles.resend}>
               Create Account
             </Link>
           </Typography>

@@ -16,12 +16,13 @@ import {
 import BackgroundLayout from "./BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
 import countries from "country-codes-list";
+import { routes } from "../routes/routes";
 
 const Login_0 = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
   const [selectedCountryCode, setSelectedCountryCode] = useState(null);
-  const [countryCodes, setCountryCodes] = useState(["+91"]);
+  const [countryCodes, setCountryCodes] = useState([""]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
 
@@ -50,7 +51,7 @@ const Login_0 = () => {
     } else {
       setError("Otp Sent");
       setOpenSnackbar(true);
-      setTimeout(() => navigate("/Login_otp"), 2000);
+      setTimeout(() => navigate(routes.loginOtp), 2000);
     }
   };
   return (
@@ -193,11 +194,9 @@ const Login_0 = () => {
           >
             Send OTP {">"}
           </Button>
-
           <Typography variant="body2" sx={styles.orLoginText}>
             Or login with
           </Typography>
-
           <Stack
             direction={{ xs: "column", sm: "row" }}
             spacing={1}
@@ -228,7 +227,8 @@ const Login_0 = () => {
                 />
                 <Typography
                   variant="body2"
-                  sx={{ color: option.color, fontFamily: "Outfit" }}>
+                  sx={{ color: option.color, fontFamily: "Outfit" }}
+                >
                   {option.text}
                 </Typography>
               </Box>
@@ -236,7 +236,7 @@ const Login_0 = () => {
           </Stack>
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <Link to="/CreateAccount" style={styles.resend}>
+            <Link to={routes.createAccount} style={styles.resend}>
               Create Account
             </Link>
           </Typography>

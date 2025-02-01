@@ -20,6 +20,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
 import { styles } from "../styles/Login_Styles";
+import { routes } from "../routes/routes";
 
 const LoginEmail = () => {
   const theme = useTheme();
@@ -51,7 +52,7 @@ const LoginEmail = () => {
     else{
       setErrorMessage("Logging in..");
       setOpenSnackbar(true);
-      setTimeout(() => navigate("/LoginOtpEmail"), 2000);
+      setTimeout(() => navigate(routes.Home), 2000);
     }
   };
 
@@ -214,7 +215,7 @@ const LoginEmail = () => {
               label="Remember Me"
               sx={styles.boxInput}
             />
-            <Link to="/LoginOtpEmail" style={styles.resend}>
+            <Link to={routes.loginOtpEmail} style={styles.resend}>
               Forgot Password?
             </Link>
           </Stack>
@@ -260,7 +261,7 @@ const LoginEmail = () => {
                 <img
                   src={option.src}
                   alt={option.alt}
-                  style={{ width: "20px", height: "20px", marginRight: "8px" }}
+                  style={styles.iconwidth}
                 />
                 <Typography
                   variant="body2"
@@ -274,7 +275,7 @@ const LoginEmail = () => {
 
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <Link to="/CreateAccount" style={styles.resend}>
+            <Link to={routes.createAccount} style={styles.resend}>
               Create Account
             </Link>
           </Typography>

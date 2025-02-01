@@ -3,12 +3,14 @@ import { Typography, Box, styled } from '@mui/material';
 import BackgroundLayout from './BackgroundLayout'; 
 import { useNavigate } from 'react-router-dom';
 import { styles } from '../styles/Login_Styles';
+import { routes } from '../routes/routes';
+
 
 const Home = () => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/login');
+    navigate(routes.Login);
   };
 
   return (

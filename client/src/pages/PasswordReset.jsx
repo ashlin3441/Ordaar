@@ -18,6 +18,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
 import { styles } from "../styles/Login_Styles";
+import { routes } from "../routes/routes";
 
 const PasswordReset = () => {
   const theme = useTheme();
@@ -50,7 +51,7 @@ const PasswordReset = () => {
     } else {
       setErrorMessage("Password reset successfully. Please login to continue.");
       setOpenSnackbar(true);
-      setTimeout(() => navigate("/LoginEmail"), 2000);
+      setTimeout(() => navigate(routes.loginemail), 2000);
     }
   };
 
@@ -266,7 +267,7 @@ const PasswordReset = () => {
 
           <Typography variant="body2" sx={styles.createAccountText}>
             Don't have an Account?{" "}
-            <Link to="/CreateAccount" style={styles.resend}>
+            <Link to={routes.createAccount} style={styles.resend}>
               Create Account
             </Link>
           </Typography>

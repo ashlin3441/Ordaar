@@ -21,6 +21,7 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
 import { styles } from "../styles/Login_Styles";
 import countries from "country-codes-list";
+import { routes } from "../routes/routes";
 
 const CreateAccount = () => {
   const [fullName, setFullName] = useState("");
@@ -83,7 +84,7 @@ const CreateAccount = () => {
     } else {
       setErrorMessage("Account Created Successfully. Please Login to continue.");
       setOpenSnackbar(true);
-      setTimeout(() => navigate("/LoginEmail"), 2000);
+      setTimeout(() => navigate(routes.loginemail), 2000);
     }
   };
 
@@ -343,7 +344,7 @@ const CreateAccount = () => {
 
             <Typography variant="body2" sx={styles.createAccountText}>
               Already have an Account?{" "}
-              <Link to="/login" style={styles.resend}>
+              <Link to={routes.Login} style={styles.resend}>
                 Login
               </Link>
             </Typography>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -11,23 +11,22 @@ import {
   FormControlLabel,
   Checkbox,
   IconButton,
-  Autocomplete,
   Snackbar,
   Alert,
 } from "@mui/material";
-import BackgroundLayout from "./BackgroundLayout";
+import BackgroundLayout from "../components/BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
 import { styles } from "../styles/Login_Styles";
-import countries from "country-codes-list";
 import { routes } from "../routes/routes";
+import 'react-phone-input-2/lib/style.css';
+import PhoneInput from "react-phone-input-2";
 
 const CreateAccount = () => {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [selectedCountryCode, setSelectedCountryCode] = useState("+91");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -35,7 +34,8 @@ const CreateAccount = () => {
   const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [countryCodes, setCountryCodes] = useState([]);
+  const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => {
@@ -45,30 +45,31 @@ const CreateAccount = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  useEffect(() => {
-    // Fetch country codes dynamically
-    const countryList = countries.customList(
-      "countryCode",
-      "+{countryCallingCode} ({countryNameEn})"
-    );
-    const countryArray = Object.entries(countryList).map(([code, label]) => ({
-      value: `+ ${code}`, // Ensure + sign is always included
-      label: ` ${label}`, // Display the + sign properly
-    }));
 
-    setCountryCodes(countryArray);
-  }, []);
 
-  const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
+  const validatePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) {
+      return "Phone number is required";
+    }
+    if (phoneNumber.length < 10) {
+      return "Enter a valid phone number";
+    }
+    return null; 
+  };
 
+  const handlePhoneNumberChange = (value) => {
+    setPhoneNumber(value);
+    setError(""); 
+  };
   const validateForm = () => {
+    const validationError = validatePhoneNumber(phoneNumber);
     if (!fullName.trim()) return "Full Name is required.";
     if (!/^[A-Za-z ]+$/.test(fullName))
       return "Full Name should only contain letters.";
     if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/))
       return "Enter a valid email address.";
-    if (!phoneNumber.match(/^\d{10}$/))
-      return "Enter a valid 10-digit phone number.";
+    if (!phoneNumber || validationError)
+      return "Enter a valid phone number.";
     if (password.length < 6)
       return "Password must be at least 6 characters long.";
     if (password !== confirmPassword) return "Passwords do not match.";
@@ -225,44 +226,22 @@ const CreateAccount = () => {
               sx={styles.phoneInput}
             />
 
-            <Stack direction="row" spacing={1}>
-              <Autocomplete
-                options={countryCodes}
-                getOptionLabel={(option) => option.label}
-                value={
-                  countryCodes.find(
-                    (code) => code.value === selectedCountryCode
-                  ) || null
-                }
-                onChange={(event, newValue) => {
-                  if (newValue) setSelectedCountryCode(newValue.value);
-                }}
-                renderInput={(params) => (
-                  <TextField {...params} variant="outlined" />
-                )}
-                disableClearable
-                sx={styles.phoneInput}
-              />
-              <TextField
-                fullWidth
-                placeholder="Enter Phone Number"
-                variant="outlined"
-                value={phoneNumber}
-                onChange={(e) => setPhoneNumber(e.target.value)}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">
-                      <img
-                        src="phone.png"
-                        alt="phone"
-                        style={styles.iconwidth}
-                      />
-                    </InputAdornment>
-                  ),
-                }}
-                sx={styles.phoneInput}
-              />
-            </Stack>
+            
+          <PhoneInput
+          inputProps={{
+            name: 'phone',
+            required: true,
+            autoFocus: true
+          }}
+        
+            placeholder="Enter phone number"
+            international
+            defaultCountry="IN"
+            value={phoneNumber} // Set the value to phoneNumber state
+            onChange={handlePhoneNumberChange} // On change, update phone number state
+            error={error} // Show error if any
+            inputStyle={styles.phInput}
+          />
 
             <TextField
               fullWidth
@@ -359,7 +338,6 @@ const CreateAccount = () => {
         <Alert
           onClose={handleCloseSnackbar}
           severity="error"
-          sx={{ width: "100%" }}
         >
           {errorMessage}
         </Alert>

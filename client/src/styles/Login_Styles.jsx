@@ -1,5 +1,5 @@
 import { Checkbox } from "@mui/material";
-import { maxWidth, width } from "@mui/system";
+import { fontFamily, height, maxWidth, width } from "@mui/system";
 
 export const styles = {
   BackgroundImage: (left) => ({
@@ -238,8 +238,18 @@ export const styles = {
     "& .MuiInputBase-input::placeholder": {
       fontFamily: "Outfit",
       textAlign: "left",
-    },
+    }
   },
+    phInput: {
+      width: '93%',
+      left:'33px',
+      borderRadius: '8px',
+      border: '0px solid #ccc',
+      padding: '10px',
+      fontSize: '16px',
+      fontFamily:'outfit',
+      height:'45px'
+    },
   CountryInput: {
     backgroundColor: "white",
     width: "100%",
@@ -414,6 +424,8 @@ export const styles = {
     zIndex: 2,
   },
   iconwidth: { width: "20px", height: "20px" },
+  columnrow: {xs: "column", sm: "row"},
+  height: {height:"45px"}
 
 
 };

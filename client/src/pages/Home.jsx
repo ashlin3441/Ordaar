@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Box, styled } from '@mui/material';
-import BackgroundLayout from './BackgroundLayout'; 
+import BackgroundLayout from '../components/BackgroundLayout'; 
 import { useNavigate } from 'react-router-dom';
 import { styles } from '../styles/Login_Styles';
 import { routes } from '../routes/routes';

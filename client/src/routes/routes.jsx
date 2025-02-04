@@ -5,5 +5,6 @@ export const routes = {
     loginOtpEmail: "/LoginOtpEmail",
     Passwordreset: "/Passwordreset",
     Home:"/",
-    Login:"/login"
+    Login:"/login",
+    dashboard:"/dashboard"
   };

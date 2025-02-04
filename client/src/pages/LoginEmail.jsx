@@ -15,12 +15,14 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import BackgroundLayout from "./BackgroundLayout";
+import BackgroundLayout from "../components/BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
 import { styles } from "../styles/Login_Styles";
 import { routes } from "../routes/routes";
+import { signInWithFacebook,signInWithGoogle } from "../utils/firebase";
+
 
 const LoginEmail = () => {
   const theme = useTheme();
@@ -52,13 +54,31 @@ const LoginEmail = () => {
     else{
       setErrorMessage("Logging in..");
       setOpenSnackbar(true);
-      setTimeout(() => navigate(routes.Home), 2000);
+      setTimeout(() => navigate(routes.dashboard), 2000);
     }
   };
 
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
+   const handleGoogleLogin = async () => {
+     try {
+       const user = await signInWithGoogle();
+       alert(`Welcome, ${user.displayName}!`);
+     } catch (error) {
+       alert("Google login failed: " + error.message);
+     }
+   };
+   
+   const handleFacebookLogin = async () => {
+     try {
+       const user = await signInWithFacebook();
+       alert(`Welcome, ${user.displayName}!`);
+     } catch (error) {
+       alert("Facebook login failed: " + error.message);
+     }
+   };
+ 
 
   return (
     <BackgroundLayout>
@@ -226,7 +246,7 @@ const LoginEmail = () => {
             sx={styles.sendOtpButton}
             onClick={handleSendOtpClick}
           >
-            Send OTP
+            Login 
           </Button>
 
           <Typography variant="body2" sx={styles.orLoginText}>
@@ -234,30 +254,29 @@ const LoginEmail = () => {
           </Typography>
 
           <Stack
-            direction={{ xs: "column", sm: "row" }}
+            direction={styles.columnrow}
             spacing={1}
             justifyContent="space-between"
             marginBottom={2}
             gap={2}
-            sx={{
-              height: "45px",
-            }}
-          >
+            sx={styles.height}>
             {[
               {
                 src: "gmail.png",
                 alt: "Email Icon",
                 text: "Email",
                 color: "red",
+                onClick:handleGoogleLogin
               },
               {
                 src: "facebook.png",
                 alt: "Facebook Icon",
                 text: "Facebook",
                 color: "#3B7DED",
+                onClick:handleFacebookLogin
               },
             ].map((option, index) => (
-              <Box key={index} sx={styles.socialLoginButton}>
+              <Box key={index} sx={styles.socialLoginButton} onClick={option.onClick}>
                 <img
                   src={option.src}
                   alt={option.alt}
@@ -289,7 +308,6 @@ const LoginEmail = () => {
         <Alert
           onClose={handleCloseSnackbar}
           severity="error"
-          sx={{ width: "100%" }}
         >
           {errorMessage}
         </Alert>

@@ -1,59 +1,72 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import {
   Box,
   Typography,
   Container,
-  TextField,
   Button,
-  InputAdornment,
   Stack,
   Grid,
-  Autocomplete,
   Snackbar,
   Alert,
 } from "@mui/material";
-import BackgroundLayout from "./BackgroundLayout";
+import BackgroundLayout from "../components/BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
-import countries from "country-codes-list";
 import { routes } from "../routes/routes";
+import "react-phone-input-2/lib/style.css";
+import PhoneInput from "react-phone-input-2";
+import { signInWithFacebook,signInWithGoogle } from "../utils/firebase";
 
 const Login_0 = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [error, setError] = useState("");
-  const [selectedCountryCode, setSelectedCountryCode] = useState(null);
-  const [countryCodes, setCountryCodes] = useState([""]);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const countryList = countries.customList(
-      "countryCode",
-      "+{countryCallingCode} ({countryNameEn})"
-    );
-    const countryArray = Object.entries(countryList).map(([code, label]) => ({
-      value: `+ ${code}`,
-      label: ` ${label}`,
-    }));
-
-    setCountryCodes(countryArray);
-  }, []);
-
-  const handlePhoneNumberChange = (event) => setPhoneNumber(event.target.value);
-
-  const handleSendOtpClick = () => {
-    if (!selectedCountryCode) {
-      setError("Please select a country code");
-      setOpenSnackbar(true);
-    } else if (!phoneNumber || phoneNumber.length < 10) {
-      setError("Please enter a valid phone number");
-      setOpenSnackbar(true);
-    } else {
-      setError("Otp Sent");
-      setOpenSnackbar(true);
-      setTimeout(() => navigate(routes.loginOtp), 2000);
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await signInWithGoogle();
+      alert(`Welcome, ${user.displayName}!`);
+    } catch (error) {
+      alert("Google login failed: " + error.message);
     }
   };
+  
+  const handleFacebookLogin = async () => {
+    try {
+      const user = await signInWithFacebook();
+      alert(`Welcome, ${user.displayName}!`);
+    } catch (error) {
+      alert("Facebook login failed: " + error.message);
+    }
+  };
+
+  const validatePhoneNumber = (phoneNumber) => {
+    if (!phoneNumber) {
+      return "Phone number is required";
+    }
+    if (phoneNumber.length < 10) {
+      return "Enter a valid phone number";
+    }
+    return null; 
+  };
+
+  const handlePhoneNumberChange = (value) => {
+    setPhoneNumber(value);
+    setError(""); 
+  };
+
+  const handleSendOtpClick = () => {
+    const validationError = validatePhoneNumber(phoneNumber);
+    if (validationError) {
+      setError(validationError); 
+      setOpenSnackbar(true); 
+    } else {
+      setError("OTP Sent Successfully");
+      setOpenSnackbar(true);
+      setTimeout(() => navigate(routes.loginOtp), 1000); 
+    }
+  };
+
   return (
     <BackgroundLayout>
       <Container maxWidth={false} sx={styles.container}>
@@ -148,44 +161,19 @@ const Login_0 = () => {
             Enter your phone number to login into this account.
           </Typography>
 
-          <Stack
-            direction={{ xs: "column", sm: "row" }}
-            spacing={2}
-            alignItems="center"
-          >
-            <Autocomplete
-              options={countryCodes}
-              getOptionLabel={(option) => option.label}
-              renderInput={(params) => (
-                <TextField {...params} label="" variant="outlined" fullWidth />
-              )}
-              onChange={(_, newValue) => {
-                setSelectedCountryCode(newValue);
-              }}
-              disableClearable
-              sx={styles.phoneInput}
-            />
+          <PhoneInput
+            inputProps={{
+              name: "phone",
+              required: true,
+              autoFocus: true,
+            }}
+            placeholder="Enter phone number"
+            defaultCountry="US"
+            value={phoneNumber}
+            onChange={handlePhoneNumberChange}
+            inputStyle={styles.phInput}
+          />
 
-            <TextField
-              sx={styles.phoneInput}
-              fullWidth
-              placeholder="Enter Phone Number"
-              variant="outlined"
-              value={phoneNumber}
-              onChange={handlePhoneNumberChange}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <img
-                      src="phone.png"
-                      alt="Phone Icon"
-                      style={styles.iconwidth}
-                    />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Stack>
           <Button
             variant="contained"
             fullWidth
@@ -198,12 +186,12 @@ const Login_0 = () => {
             Or login with
           </Typography>
           <Stack
-            direction={{ xs: "column", sm: "row" }}
+            direction={styles.columnrow}
             spacing={1}
             justifyContent="space-between"
             marginBottom={2}
             gap={2}
-            sx={{ height: "45px" }}
+            sx={styles.height}
           >
             {[
               {
@@ -211,15 +199,17 @@ const Login_0 = () => {
                 alt: "Email Icon",
                 text: "Email",
                 color: "red",
+                onclick:handleGoogleLogin
               },
               {
                 src: "facebook.png",
                 alt: "Facebook Icon",
                 text: "Facebook",
                 color: "#3B7DED",
+                onclick:handleFacebookLogin
               },
             ].map((option, index) => (
-              <Box key={index} sx={styles.socialLoginButton}>
+              <Box key={index} sx={styles.socialLoginButton} onClick={option.onclick}>
                 <img
                   src={option.src}
                   alt={option.alt}
@@ -242,16 +232,21 @@ const Login_0 = () => {
           </Typography>
         </Stack>
       </Container>
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={3000}
         onClose={() => setOpenSnackbar(false)}
       >
-        <Alert severity="error" onClose={() => setOpenSnackbar(false)}>
+        <Alert
+          severity={error === "OTP Sent Successfully" ? "success" : "error"}
+          onClose={() => setOpenSnackbar(false)}
+        >
           {error}
         </Alert>
       </Snackbar>
     </BackgroundLayout>
   );
 };
+
 export default Login_0;

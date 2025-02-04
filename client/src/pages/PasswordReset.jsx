@@ -13,7 +13,7 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import BackgroundLayout from "./BackgroundLayout";
+import BackgroundLayout from "../components/BackgroundLayout";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useNavigate, Link } from "react-router-dom";
@@ -226,15 +226,12 @@ const PasswordReset = () => {
           </Typography>
 
           <Stack
-            direction={{ xs: "column", sm: "row" }}
+            direction={styles.columnrow}
             spacing={1}
             justifyContent="space-between"
             marginBottom={2}
             gap={2}
-            sx={{
-              height: "45px",
-            }}
-          >
+            sx={styles.height}>
             {[
               {
                 src: "gmail.png",
@@ -281,7 +278,6 @@ const PasswordReset = () => {
         <Alert
           onClose={handleCloseSnackbar}
           severity="error"
-          sx={{ width: "100%" }}
         >
           {errorMessage}
         </Alert>

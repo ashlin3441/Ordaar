@@ -12,9 +12,10 @@ import {
   Snackbar,
   Alert,
 } from "@mui/material";
-import BackgroundLayout from "./BackgroundLayout";
+import BackgroundLayout from "../components/BackgroundLayout";
 import { styles } from "../styles/Login_Styles";
 import { routes } from "../routes/routes";
+import { signInWithFacebook,signInWithGoogle } from "../utils/firebase";
 
 const Login_otp = () => {
   const navigate = useNavigate();
@@ -53,6 +54,25 @@ const Login_otp = () => {
       setOpenSnackbar(true);
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await signInWithGoogle();
+      alert(`Welcome, ${user.displayName}!`);
+    } catch (error) {
+      alert("Google login failed: " + error.message);
+    }
+  };
+  
+  const handleFacebookLogin = async () => {
+    try {
+      const user = await signInWithFacebook();
+      alert(`Welcome, ${user.displayName}!`);
+    } catch (error) {
+      alert("Facebook login failed: " + error.message);
+    }
+  };
+
   return (
     <BackgroundLayout>
       <Container maxWidth={false} sx={styles.container}>
@@ -197,7 +217,7 @@ const Login_otp = () => {
           </Typography>
 
           <Stack
-            direction={{ xs: "column", sm: "row" }}
+            direction={styles.columnrow}
             spacing={1}
             justifyContent="space-between"
             marginBottom={2}
@@ -212,15 +232,17 @@ const Login_otp = () => {
                 alt: "Email Icon",
                 text: "Email",
                 color: "red",
+                onClick: handleGoogleLogin,
               },
               {
                 src: "facebook.png",
                 alt: "Facebook Icon",
                 text: "Facebook",
                 color: "#3B7DED",
+                onClick: handleFacebookLogin,
               },
             ].map((option, index) => (
-              <Box key={index} sx={styles.socialLoginButton}>
+              <Box key={index} sx={styles.socialLoginButton} onClick={option.onClick}>
                 <img
                   src={option.src}
                   alt={option.alt}
@@ -252,7 +274,6 @@ const Login_otp = () => {
         <Alert
           onClose={() => setOpenSnackbar(false)}
           severity={snackbarSeverity} 
-          sx={{ width: "100%" }}
         >
           {message}
         </Alert>

@@ -6,23 +6,43 @@ import {
   Button,
   IconButton,
   InputAdornment,
-  styled,
 } from "@mui/material";
 import OtpNumber from "./OtpNumber";
 import styles from "../../styles/ProfileStyles";
 
 export default function NumberChange({ onClose }) {
-  const [newEmail, setNewEmail] = useState("");
-
+  const [newNumber, setNewNumber] = useState("");
+  const [numberError, setNumberError] = useState("");
   const [showOtpNumber, setShowOtpNumber] = useState(false);
 
+  const validatePhoneNumber = (number) => {
+    const phoneRegex = /^\d{10}$/; 
+    return phoneRegex.test(number);
+  };
+
+  const handleChange = (e) => {
+    const value = e.target.value.replace(/\D/g, ""); 
+    setNewNumber(value);
+
+    if (!value) {
+      setNumberError("Phone number is required");
+    } else if (!validatePhoneNumber(value)) {
+      setNumberError("Enter a valid 10-digit phone number");
+    } else {
+      setNumberError("");
+    }
+  };
+
   const handleSubmit = () => {
-    setShowOtpNumber(true);
+    if (!numberError && newNumber) {
+      setShowOtpNumber(true);
+    }
   };
 
   if (showOtpNumber) {
     return <OtpNumber onClose={onClose} />;
   }
+
   return (
     <Box sx={styles.profileDrawer}>
       <Box sx={styles.CloseBox}>
@@ -45,15 +65,17 @@ export default function NumberChange({ onClose }) {
         <TextField
           fullWidth
           variant="outlined"
-          value={newEmail}
-          onChange={(e) => setNewEmail(e.target.value)}
+          value={newNumber}
+          onChange={handleChange}
           placeholder="Enter Phone Number"
+          error={!!numberError}
+          helperText={numberError}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <img
                   src="phone-icon.png"
-                  alt="Search"
+                  alt="Phone"
                   style={styles.WidthHeight20}
                 />
               </InputAdornment>
@@ -66,9 +88,11 @@ export default function NumberChange({ onClose }) {
           fullWidth
           onClick={handleSubmit}
           sx={styles.SubmitButton}
+          disabled={!!numberError || !newNumber}
         >
           Submit
         </Button>
+
       </Box>
     </Box>
   );

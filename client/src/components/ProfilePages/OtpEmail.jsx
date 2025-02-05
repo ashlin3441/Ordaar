@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, IconButton } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  IconButton,
+  Snackbar,
+} from "@mui/material";
 import styles from "../../styles/ProfileStyles";
-
+import { useNavigate } from "react-router-dom";
+import { routes } from "../../routes/routes";
 export default function OtpEmail({ onClose }) {
   const [otp, setOtp] = useState(new Array(6).fill(""));
+  const [error, setError] = useState("");
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
 
   const handleChange = (e, index) => {
     const value = e.target.value;
@@ -11,10 +23,32 @@ export default function OtpEmail({ onClose }) {
       const newOtp = [...otp];
       newOtp[index] = value;
       setOtp(newOtp);
+      setError("");
+
       if (value && index < 5) {
         document.getElementById(`otp-${index + 1}`).focus();
       }
     }
+  };
+  const navigate = useNavigate();
+  const handleSubmit = () => {
+    const otpString = otp.join("");
+    if (otpString !== "123456") {
+      setSnackbarMessage("Invalid OTP. Please try again.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
+    } else {
+      setError("");
+      setSnackbarMessage("OTP verified successfully!");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
+    }
+    setTimeout(() => {
+      navigate(routes.dashboard); }, 2000); 
+  };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
   };
 
   return (
@@ -51,14 +85,28 @@ export default function OtpEmail({ onClose }) {
           />
         ))}
       </Box>
-
-      <Button variant="contained" fullWidth sx={styles.VerifyButton}>
+      <Button
+        variant="contained"
+        fullWidth
+        sx={styles.VerifyButton}
+        onClick={handleSubmit}
+        disabled={otp.some((digit) => digit === "")}
+      >
         ✓ Verify OTP
       </Button>
 
       <Typography variant="body2" sx={styles.BottomText}>
         Didn’t receive the code? <span style={styles.Resend}>Resend</span>
       </Typography>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleCloseSnackbar}
+        message={snackbarMessage}
+        severity={snackbarSeverity}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
     </Box>
   );
 }

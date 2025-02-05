@@ -12,16 +12,37 @@ import styles from "../../styles/ProfileStyles";
 
 export default function EmailChange({ onClose }) {
   const [newEmail, setNewEmail] = useState("");
-
+  const [emailError, setEmailError] = useState("");
   const [showOtpVerification, setShowOtpEmail] = useState(false);
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
+  const handleChange = (e) => {
+    const email = e.target.value;
+    setNewEmail(email);
+
+    if (!email) {
+      setEmailError("Email is required");
+    } else if (!validateEmail(email)) {
+      setEmailError("Enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleSubmit = () => {
-    setShowOtpEmail(true);
+    if (!emailError && newEmail) {
+      setShowOtpEmail(true);
+    }
   };
 
   if (showOtpVerification) {
     return <OtpEmail onClose={onClose} />;
   }
+
   return (
     <Box sx={styles.profileDrawer}>
       <Box sx={styles.CloseBox}>
@@ -45,14 +66,16 @@ export default function EmailChange({ onClose }) {
           fullWidth
           variant="outlined"
           value={newEmail}
-          onChange={(e) => setNewEmail(e.target.value)}
+          onChange={handleChange}
           placeholder="Email ID"
+          error={!!emailError}
+          helperText={emailError}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
                 <img
                   src="mail_icon.png"
-                  alt="Search"
+                  alt="Mail"
                   style={styles.WidthHeight20}
                 />
               </InputAdornment>
@@ -65,6 +88,7 @@ export default function EmailChange({ onClose }) {
           fullWidth
           onClick={handleSubmit}
           sx={styles.SubmitButton}
+          disabled={!!emailError || !newEmail}
         >
           Submit
         </Button>

@@ -170,8 +170,20 @@ const styles = {
       background: "linear-gradient(to right, #FF6B28, #FDD30F)",
     },
   },
-  BottomText: {mt: 2, fontFamily: "outfit", opacity: 0.6, },
-  Resend:{color: "red", fontWeight: "bold" },
+  BottomText: { mt: 2, fontFamily: "outfit", opacity: 0.6 },
+  Resend: { color: "red", fontWeight: "bold" },
+  py: { py: 3 },
+  cameraIcon: {
+    position: "absolute",
+    top: "37%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    borderRadius: "50%",
+    padding: "5px",
+    background:'transparent',
+  },
+  
   
 };
 

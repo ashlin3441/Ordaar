@@ -17,11 +17,13 @@ import CreateAccount from "./pages/CreateAccount";
 import Dashboard from "./pages/Dashboard";
 import Customers from "./pages/Customers";
 
+
 // Components
 import Sidebar from "./components/Sidebar";
 import Navbar from "./components/Navbar";
 import Background from "./components/Background";
 import Profile from "./components/ProfilePages/profile";
+import Dining from "./pages/Dining";
 
 
 
@@ -78,6 +80,11 @@ const App = () => {
           <Route path="/dashboard" element={
               <DashboardLayout>
                 <Dashboard />
+              </DashboardLayout>
+          } />
+          <Route path="/dining" element={
+              <DashboardLayout>
+                <Dining />
               </DashboardLayout>
           } />
           <Route path="/customers" element={

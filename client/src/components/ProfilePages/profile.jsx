@@ -7,16 +7,18 @@ import {
   Typography,
   Button,
 } from "@mui/material";
-import { Mail, Phone, Lock } from "lucide-react";
-
+import { Mail, Phone, Lock, Camera } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import EmailChange from "./EmailChange";
 import NumberChange from "./NumberChange";
 import PasswordReset from "./PasswordReset1";
 import styles from "../../styles/ProfileStyles";
+import { routes } from "../../routes/routes";
 
 export default function Profile({ open, onClose }) {
   const [activeView, setActiveView] = useState("profile");
-
+  const navigate = useNavigate();
+  const [profileImage, setProfileImage] = useState("/profile.jpg");
   const profileData = [
     {
       icon: <img src="name.png" alt="Name" style={styles.Nameicon} />,
@@ -42,6 +44,19 @@ export default function Profile({ open, onClose }) {
       onChange: () => setActiveView("PasswordReset"),
     },
   ];
+  const handleLogout = () => {
+    navigate(routes.Home);
+  };
+  const handleProfileImageChange = (event) => {
+    const file = event.target.files[0]; // Get the selected file
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result); // Set the profile image to the selected file
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
     <Drawer anchor="right" open={open} onClose={onClose}>
@@ -57,12 +72,33 @@ export default function Profile({ open, onClose }) {
           </Box>
 
           <Box sx={styles.avatarBox}>
-            <Avatar alt="Profile" src="/profile.jpg" sx={styles.ProfileAvataar} />
+            <Avatar
+              alt="Profile"
+              src={profileImage}
+              sx={styles.ProfileAvataar}
+            />
+            <IconButton
+              sx={styles.cameraIcon} // Position the camera icon
+              onClick={() => document.getElementById("file-input").click()} // Trigger file input on click
+            >
+              <Camera size={24} />
+            </IconButton>
+            <input
+              id="file-input"
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              onChange={handleProfileImageChange} // Handle the file selection
+            />
           </Box>
           {profileData.map((item, index) => (
             <Box key={index} sx={styles.profileDetailBox}>
               <Box sx={styles.profileBox}>
-                <Typography variant="body2" align="left" sx={styles.iconLabelText}>
+                <Typography
+                  variant="body2"
+                  align="left"
+                  sx={styles.iconLabelText}
+                >
                   {item.icon}
                   <Box sx={styles.iconDivider} />
                   <span>{item.label}</span>
@@ -71,7 +107,7 @@ export default function Profile({ open, onClose }) {
                   <Button
                     variant="outlined"
                     size="small"
-                    onClick={item.onChange} 
+                    onClick={item.onChange}
                     sx={styles.changeButton}
                   >
                     Change
@@ -87,7 +123,13 @@ export default function Profile({ open, onClose }) {
             <Button variant="outlined" fullWidth sx={styles.donationButton}>
               Donations
             </Button>
-            <Button variant="outlined" color="error" fullWidth sx={styles.logoutButton}>
+            <Button
+              variant="outlined"
+              color="error"
+              fullWidth
+              sx={styles.logoutButton}
+              onClick={handleLogout}
+            >
               Log out
             </Button>
           </Box>

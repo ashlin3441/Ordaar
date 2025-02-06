@@ -124,5 +124,29 @@ export const styles1 = {
     fontWeight: "bold",
     fontSize: "16px",
   },
-  BottomText: { fontFamily: "outfit", opacity: 0.6 },
+  BottomText: { mt: 2, fontFamily: "outfit", opacity: 0.6 },
+  ScrollBar3: {
+    width: 450,
+    p: 3,
+    overflowY: "auto",
+    bgcolor: "transparent",
+    borderRadius: 5,
+    paddingRight: "1px",
+    marginRight:"25px",
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#E2E2E2",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#BDBDBD",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#BDBDBD",
+    },
+    fontFamily: "outfit",
+  },
 };

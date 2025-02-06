@@ -12,6 +12,10 @@ import {
   InputAdornment,
   Avatar,
   Grid,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
 } from "@mui/material";
 import { styles1 } from "../styles/DashBoardStyles";
 import styles from "../styles/ProfileStyles";
@@ -21,11 +25,20 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import StarIcon from "@mui/icons-material/Star";
+import FoodMenu from "../components/FoodMenu";
 
 const Dining = () => {
   const [tabValue, setTabValue] = useState(0);
+  const [isFoodMenuOpen, setFoodMenuOpen] = useState(false);
   const handleChange = (event, newValue) => setTabValue(newValue);
 
+  const handleOpenFoodMenu = () => {
+    setFoodMenuOpen(true);
+  };
+
+  const handleCloseFoodMenu = () => {
+    setFoodMenuOpen(false);
+  };
   const bookings = [
     {
       name: "Jhonne Smith",
@@ -234,11 +247,13 @@ const Dining = () => {
                   >
                     <Typography variant="body2">{booking.Amount}</Typography>
                     <Typography
-                  variant="body2"
-                  sx={{ color: booking.status1 === "Recieved" ? "green" : "red" }}
-                >
-                  {booking.status1}
-                </Typography>
+                      variant="body2"
+                      sx={{
+                        color: booking.status1 === "Recieved" ? "green" : "red",
+                      }}
+                    >
+                      {booking.status1}
+                    </Typography>
                   </Box>
                 </Box>
                 <Grid container spacing={1} sx={{ mt: 2 }}>
@@ -307,7 +322,6 @@ const Dining = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mt={2}>
-                  
                   <Button
                     variant="contained"
                     sx={{
@@ -332,14 +346,39 @@ const Dining = () => {
                   >
                     {booking.status}
                   </Button>
-                  
+
                   <Button
                     variant="outlined"
                     color="inherit"
                     startIcon={<FastfoodIcon />}
+                    onClick={handleOpenFoodMenu}
                   >
                     Food Menu
                   </Button>
+                  <Dialog
+                    open={isFoodMenuOpen}
+                    onclose={handleCloseFoodMenu}
+                    sx={{
+                      "& .MuiDialog-paper": {
+                        position: "absolute",
+                        boxShadow: "none",
+                        background:'transparent',
+                        borderRadius:'2',
+                        top: "20%",
+                        right: "10%", // This moves the popup to the right
+                        width: "430px", // You can adjust the width as needed
+                        maxHeight: "80%", // Adjusts the height of the dialog
+                      },
+                      
+                    }}
+                    BackdropProps={{
+                      invisible: true, 
+                    }}
+                  >
+                    <DialogContent>
+                      <FoodMenu  onclose={handleCloseFoodMenu}/>
+                    </DialogContent>
+                  </Dialog>
                 </Box>
               </CardContent>
             </Card>

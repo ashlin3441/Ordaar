@@ -24,6 +24,7 @@ import Navbar from "./components/Navbar";
 import Background from "./components/Background";
 import Profile from "./components/ProfilePages/profile";
 import Dining from "./pages/Dining";
+import FoodMenu from "./components/FoodMenu";
 
 
 
@@ -83,10 +84,11 @@ const App = () => {
               </DashboardLayout>
           } />
           <Route path="/dining" element={
-              <DashboardLayout>
-                <Dining />
-              </DashboardLayout>
-          } />
+            <DashboardLayout>
+              <Dining />
+            </DashboardLayout>
+          }>
+          </Route>
           <Route path="/customers" element={
               <DashboardLayout>
                 <Customers />

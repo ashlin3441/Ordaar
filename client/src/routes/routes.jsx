@@ -1,3 +1,5 @@
+
+
 export const routes = {
     createAccount: "/CreateAccount",
     loginOtp: "/Login_otp",
@@ -8,4 +10,6 @@ export const routes = {
     Login:"/login",
     dashboard:"/dashboard",
     Profile:"/Profile",
+    FoodMenu:"/FoodMenu",
+    Donations:"/Donations",
   };

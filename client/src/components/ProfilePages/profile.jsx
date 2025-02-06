@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import EmailChange from "./EmailChange";
 import NumberChange from "./NumberChange";
 import PasswordReset from "./PasswordReset1";
+import Donations from "./Donations";
 import styles from "../../styles/ProfileStyles";
 import { routes } from "../../routes/routes";
 
@@ -46,6 +47,9 @@ export default function Profile({ open, onClose }) {
   ];
   const handleLogout = () => {
     navigate(routes.Home);
+  };
+  const handleDonations = () => {
+    setActiveView("donations"); // Set to donations view
   };
   const handleProfileImageChange = (event) => {
     const file = event.target.files[0]; // Get the selected file
@@ -120,7 +124,12 @@ export default function Profile({ open, onClose }) {
             </Box>
           ))}
           <Box sx={styles.buttonBox}>
-            <Button variant="outlined" fullWidth sx={styles.donationButton}>
+            <Button
+              variant="outlined"
+              fullWidth
+              sx={styles.donationButton}
+              onClick={handleDonations}
+            >
               Donations
             </Button>
             <Button
@@ -138,8 +147,10 @@ export default function Profile({ open, onClose }) {
         <EmailChange onClose={() => setActiveView("profile")} />
       ) : activeView === "numberChange" ? (
         <NumberChange onClose={() => setActiveView("profile")} />
-      ) : (
+      ) : activeView === "PasswordReset" ? (
         <PasswordReset onClose={() => setActiveView("profile")} />
+      ) : (
+        <Donations onClose={() => setActiveView("profile")} /> 
       )}
     </Drawer>
   );

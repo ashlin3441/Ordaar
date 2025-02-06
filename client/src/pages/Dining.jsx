@@ -222,21 +222,23 @@ const Dining = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Box textAlign="right" sx={{
+                  <Box
+                    textAlign="right"
+                    sx={{
                       border: "1px solid #ddd",
                       borderRadius: 2,
                       bgcolor: "#FFFFFF",
-                      marginLeft:'10px',
+                      marginLeft: "10px",
                       p: 1,
-                    }}>
+                    }}
+                  >
                     <Typography variant="body2">{booking.Amount}</Typography>
                     <Typography
-                      variant="body2"
-                      color={booking.color}
-                      fontWeight="bold"
-                    >
-                      {booking.status1}
-                    </Typography>
+                  variant="body2"
+                  sx={{ color: booking.status1 === "Recieved" ? "green" : "red" }}
+                >
+                  {booking.status1}
+                </Typography>
                   </Box>
                 </Box>
                 <Grid container spacing={1} sx={{ mt: 2 }}>
@@ -249,7 +251,7 @@ const Dining = () => {
                       border: "1px solid #ddd",
                       borderRadius: 2,
                       bgcolor: "#FFFFFF",
-                      marginLeft:'10px',
+                      marginLeft: "10px",
                       p: 1,
                     }}
                   >
@@ -267,7 +269,7 @@ const Dining = () => {
                       border: "1px solid #ddd",
                       borderRadius: 2,
                       bgcolor: "#FFFFFF",
-                      marginLeft:'10px',
+                      marginLeft: "10px",
                       p: 1,
                     }}
                   >
@@ -305,13 +307,32 @@ const Dining = () => {
                   </Typography>
                 </Box>
                 <Box display="flex" justifyContent="space-between" mt={2}>
+                  
                   <Button
-                    variant="outlined"
-                    color="error"
+                    variant="contained"
+                    sx={{
+                      background:
+                        booking.status === "Visited"
+                          ? "linear-gradient(90deg, #FDD30F, #FF6B28)"
+                          : booking.status === "Not Visited"
+                          ? "#FFA500"
+                          : "inherit",
+                      color:
+                        booking.status === "Customer Cancelled"
+                          ? "red"
+                          : booking.status === "Restaurant Rejected"
+                          ? "red"
+                          : booking.status === "Visited"
+                          ? "white"
+                          : booking.status === "Not Visited"
+                          ? "white"
+                          : "inherit",
+                    }}
                     startIcon={<AccessTimeIcon />}
                   >
                     {booking.status}
                   </Button>
+                  
                   <Button
                     variant="outlined"
                     color="inherit"

@@ -48,7 +48,8 @@ const Orders = ({ onManageClick }) => {
       </Box>
 
       {/* Status Filters */}
-      <Box sx={{ display: "flex", gap: 3, mb: 2, flexWrap: "wrap" }}>
+      <Box sx={{ display: "flex",
+         gap: 3, mb: 2, flexWrap: "wrap" }}>
         {orderStatuses.map((status) => (
           <Typography
             key={status.value}
@@ -70,7 +71,8 @@ const Orders = ({ onManageClick }) => {
       <Box sx={{ height: "1px", backgroundColor: "#ccc", mb: 2 }} />
 
       {/* Orders List */}
-      <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+      <Box sx={{ display: "flex",
+         flexDirection: "column", gap: 2 }}>
         {filteredOrders.map((order) => (
           <Box
             key={order.orderId}

@@ -1,9 +1,11 @@
 // Navbar.jsx
 import React from "react";
-import { AppBar, Toolbar, IconButton, InputBase, Box, Avatar } from "@mui/material";
+import { Toolbar, IconButton, InputBase, Box, Avatar } from "@mui/material";
 import { Search, HelpOutline } from "@mui/icons-material";
+import {useActionData, useNavigate} from "react-router-dom";
 
 function Navbar({ onProfileClick }) {
+  const navigate = useNavigate();
   return (
     <Box
       position="fixed"
@@ -78,6 +80,7 @@ function Navbar({ onProfileClick }) {
               marginRight: "20px",
               padding: { xs: "6px", sm: "8px" },
             }}
+            onClick={() => navigate("/faq")}
           >
             <HelpOutline sx={{ fontSize: { xs: "20px", sm: "24px" } }} />
           </IconButton>

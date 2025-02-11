@@ -62,7 +62,7 @@ const Dashboard = () => {
       />
 
       {/* Right Section (Food Categories + Total Sales OR Order Details) */}
-      <Box sx={{ gridColumn: { xs: "1", md: "3 / 4" }, gridRow: "1 / 3" }}>
+      <Box sx={{ gridColumn: { xs: "1", md: "3 / 4" }, gridRow: "1 / 3",height: "100%", overflowY: "auto" }}>
         {selectedOrder ? (
           <OrderDetails order={selectedOrder} />
         ) : (

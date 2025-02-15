@@ -5,7 +5,7 @@ import FoodCategories from "../components/FoodCategories";
 import TotalSales from "../components/TotalSales";
 import Orders from "../components/Orders";
 import OrdersPage from "./OrdersPage";
-import OrderDetails from "../components/OrderDetails"; // New component for order details
+import OrderDetails from "../components/OrderDetails";
 
 const Dashboard = () => {
   const [showOrdersPage, setShowOrdersPage] = useState(false);
@@ -27,18 +27,21 @@ const Dashboard = () => {
           xs: "1fr",
           md: "40% 2px 60%",
         },
-        gridTemplateRows: "auto auto",
+        gridTemplateRows: "1fr",
         gap: { xs: "8px", sm: "16px" },
         padding: { xs: "8px", sm: "16px" },
-        marginTop: { xs: "56px", sm: "64px" },
+        marginTop: { xs: "56px", sm: "64px" }, // Ensure it starts below the navbar
+        height: "calc(100vh - 64px)", // Full height minus navbar
+        overflow: "hidden",
       }}
     >
-      {/* Left Section (Default: DailyReport + Orders OR OrdersPage) */}
+      {/* Left Section */}
       <Box
         sx={{
           gridColumn: { xs: "1", md: "1 / 2" },
-          gridRow: "1 / 3",
           overflowY: "auto",
+          height: "100%",
+          marginTop:"10px"
         }}
       >
         {showOrdersPage ? (
@@ -56,13 +59,21 @@ const Dashboard = () => {
         sx={{
           display: { xs: "none", md: "block" },
           gridColumn: "2 / 3",
-          gridRow: "1 / 3",
           backgroundColor: "#ccc",
+          height: "100%",
+          marginTop:"15px"
         }}
       />
 
       {/* Right Section (Food Categories + Total Sales OR Order Details) */}
-      <Box sx={{ gridColumn: { xs: "1", md: "3 / 4" }, gridRow: "1 / 3",height: "100%", overflowY: "auto" }}>
+      <Box
+        sx={{
+          gridColumn: { xs: "1", md: "3 / 4" },
+          height: "100%",
+          overflowY: "auto",
+          marginTop:"15px"
+        }}
+      >
         {selectedOrder ? (
           <OrderDetails order={selectedOrder} />
         ) : (

@@ -9,7 +9,7 @@ function Navbar() {
       position="fixed"
       sx={{
         zIndex: (theme) => theme.zIndex.drawer + 1,
-        backgroundColor: "white",
+        backgroundColor: "transparent",
         width: "80%",
         padding: { xs: "8px", sm: "16px" },
       }}
@@ -92,6 +92,7 @@ function Navbar() {
           </IconButton>
         </Box>
       </Toolbar>
+      <hr style={{marginTop:"10px",border: "0.5px solid #ddd" }} />
     </Box>
   );
 }

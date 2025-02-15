@@ -20,10 +20,12 @@ const ordersData = [
         photo: "https://media.istockphoto.com/id/1591572504/photo/cheerful-businesswomen-shaking-hands-in-meeting-room.jpg?s=1024x1024&w=is&k=20&c=GYtKvPPbShP3JOyGRZdlakcQE2_h0skl6g6bU0r83qk="
       },
       items: [
-        { id: "1", name: "Chicken Pizza", size: "M", quantity: 2, price: 140, image: "https://media.istockphoto.com/id/489809469/photo/bbq-chicken-pizza.jpg?s=1024x1024&w=is&k=20&c=-zn8jXiCxh_dIe5QrMH0bF5fCK8CFk8XDYoIs4ZO17U=" },
-        { id: "2", name: "Veg Burger", size: "L", quantity: 1, price: 120, image: "https://media.istockphoto.com/id/1489417428/photo/crispy-aloo-tikki-burger.jpg?s=2048x2048&w=is&k=20&c=37pEbyDlZteGUlZ-CrzTpdI3tIPFNrjotW1vYofVwR8=" }
+        { id: "1", name: "Chicken Pizza", size: "M", quantity: 4, price: 140, image: "https://media.istockphoto.com/id/489809469/photo/bbq-chicken-pizza.jpg?s=1024x1024&w=is&k=20&c=-zn8jXiCxh_dIe5QrMH0bF5fCK8CFk8XDYoIs4ZO17U=" },
+        { id: "2", name: "Veg Burger", size: "L", quantity: 1, price: 120, image: "https://media.istockphoto.com/id/1489417428/photo/crispy-aloo-tikki-burger.jpg?s=2048x2048&w=is&k=20&c=37pEbyDlZteGUlZ-CrzTpdI3tIPFNrjotW1vYofVwR8=" },
+        { id: "3", name: "veg Pizza", size: "M", quantity: 2, price: 120, image: "https://media.istockphoto.com/id/489809469/photo/bbq-chicken-pizza.jpg?s=1024x1024&w=is&k=20&c=-zn8jXiCxh_dIe5QrMH0bF5fCK8CFk8XDYoIs4ZO17U=" }
+
       ],
-      totalAmount: 400,
+      totalAmount: 500,
       status: "pending",
       time: "Sunday 10:00 AM"
     },

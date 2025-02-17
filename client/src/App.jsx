@@ -22,6 +22,7 @@ import Dining from "./pages/Dining";
 import FoodMenu from "./components/FoodMenu";
 import Faq from "./pages/Faq";
 import ManageFaq from "./pages/ManageFaq";
+import Requests from "./pages/Requests";
 
 const DashboardLayout = ({ children }) => {
   const [profileOpen, setProfileOpen] = useState(false);
@@ -102,6 +103,14 @@ const App = () => {
               </DashboardLayout>
             }
           />
+          <Route
+            path="/requests"
+            element={
+              <DashboardLayout>
+                <Requests />
+              </DashboardLayout>
+            }
+          ></Route>
           <Route
             path="/dining"
             element={

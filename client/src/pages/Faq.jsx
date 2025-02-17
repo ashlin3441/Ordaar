@@ -21,7 +21,7 @@ const Faq = () => {
   const [messages, setMessages] = useState([]);
   const [inputText, setInputText] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-  const [selectedContact, setSelectedContact] = useState(null); // Track selected contact
+  const [selectedContact, setSelectedContact] = useState(null); 
   const navigate = useNavigate();
   const handleTabChange = (event, newValue) => {
     setSelectedTab(newValue);
@@ -51,7 +51,7 @@ const Faq = () => {
   };
 
   const handleChatClick = (contact) => {
-    setSelectedContact(contact); // Open chat with the selected contact
+    setSelectedContact(contact); 
   };
 
   const supportData = [

@@ -13,12 +13,11 @@ import {
   Avatar,
   Grid,
   Dialog,
-  DialogActions,
   DialogContent,
-  DialogTitle,
 } from "@mui/material";
 import { styles1 } from "../styles/DashBoardStyles";
 import styles from "../styles/ProfileStyles";
+import { DiningStyles } from "../styles/DiningStyles";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import PhoneIcon from "@mui/icons-material/Phone";
@@ -87,7 +86,7 @@ const Dining = () => {
   ];
 
   const filteredBookings = () => {
-    if (tabValue === 0) return bookings; // Show all bookings
+    if (tabValue === 0) return bookings;
     if (tabValue === 1) return bookings.filter((b) => b.status === "Visited");
     if (tabValue === 2)
       return bookings.filter((b) => b.status === "Not Visited");
@@ -98,11 +97,9 @@ const Dining = () => {
   };
 
   return (
-    <Box p={2} marginTop={8} display="flex" gap={3}>
-      <Box flex={4} display="flex" flexDirection="column" gap={2}>
-        <Typography variant="h4" sx={styles.headerText}>
-          Dining
-        </Typography>
+    <Box sx={DiningStyles.container}>
+      <Box sx={DiningStyles.leftPanel}>
+        <Typography sx={styles.headerText}>Dining</Typography>
         <TextField
           fullWidth
           variant="outlined"
@@ -121,21 +118,12 @@ const Dining = () => {
           }}
           sx={styles1.searchinput}
         />
-        <Box flex={1} sx={styles1.ScrollBar1}>
+        <Box sx={styles1.ScrollBar1}>
           {[...Array(10)].map((_, index) => (
-            <Card
-              key={index}
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                borderRadius: 3,
-                mb: 2,
-                gap: 2,
-              }}
-            >
+            <Card key={index} sx={DiningStyles.restaurantCard}>
               <CardMedia
                 component="img"
-                sx={{ width: 120, height: 80, borderRadius: 2 }}
+                sx={DiningStyles.cardMedia}
                 image="/restaurant.jpg"
                 alt="Restaurant"
               />
@@ -156,14 +144,7 @@ const Dining = () => {
                   </Typography>
                 </Box>
               </CardContent>
-              <Box
-                display="flex"
-                alignItems="center"
-                gap={1}
-                p={1}
-                bgcolor="#FFF8E1"
-                borderRadius={2}
-              >
+              <Box sx={DiningStyles.ratingBox}>
                 <StarIcon fontSize="small" color="warning" />
                 <Typography variant="body2" fontWeight="bold">
                   5.0
@@ -174,29 +155,11 @@ const Dining = () => {
         </Box>
       </Box>
 
-      <Box flex={5} display="flex" flexDirection="column" gap={2}>
+      <Box sx={DiningStyles.rightPanel}>
         <Tabs
           value={tabValue}
           onChange={handleChange}
-          sx={{
-            marginLeft: "35px",
-            fontFamily: "outfit",
-            backgroundColor: "transparent",
-            zIndex: 1,
-            "& .MuiTabs-indicator": {
-              background: "linear-gradient(90deg, #FDD30F, #FF6B28)",
-            },
-            "& .MuiTab-root": {
-              color: "grey",
-              textTransform: "none",
-            },
-            "& .Mui-selected": {
-              color: "transparent",
-              backgroundImage: "linear-gradient(90deg, #FDD30F, #FF6B28)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "grey",
-            },
-          }}
+          sx={DiningStyles.tabStyles}
         >
           <Tab label="All" />
           <Tab label="Visited" />
@@ -206,15 +169,7 @@ const Dining = () => {
         </Tabs>
         <Box sx={styles1.ScrollBar2}>
           {filteredBookings().map((booking, index) => (
-            <Card
-              key={index}
-              sx={{
-                borderRadius: 3,
-                maxWidth: 500,
-                marginBottom: "10px",
-                marginLeft: "30px",
-              }}
-            >
+            <Card key={index} sx={DiningStyles.bookingCard}>
               <CardContent>
                 <Box
                   display="flex"
@@ -235,16 +190,7 @@ const Dining = () => {
                       </Box>
                     </Box>
                   </Box>
-                  <Box
-                    textAlign="right"
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: 2,
-                      bgcolor: "#FFFFFF",
-                      marginLeft: "10px",
-                      p: 1,
-                    }}
-                  >
+                  <Box textAlign="right" sx={DiningStyles.bookingInfoBox}>
                     <Typography variant="body2">{booking.Amount}</Typography>
                     <Typography
                       variant="body2"
@@ -262,13 +208,7 @@ const Dining = () => {
                     xs={5.7}
                     display="flex"
                     alignItems="center"
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: 2,
-                      bgcolor: "#FFFFFF",
-                      marginLeft: "10px",
-                      p: 1,
-                    }}
+                    sx={DiningStyles.bookingInfoBox}
                   >
                     <CalendarTodayIcon fontSize="small" color="warning" />
                     <Typography variant="body2" ml={1}>
@@ -280,13 +220,7 @@ const Dining = () => {
                     xs={5.7}
                     display="flex"
                     alignItems="center"
-                    sx={{
-                      border: "1px solid #ddd",
-                      borderRadius: 2,
-                      bgcolor: "#FFFFFF",
-                      marginLeft: "10px",
-                      p: 1,
-                    }}
+                    sx={DiningStyles.bookingInfoBox}
                   >
                     <AccessTimeIcon fontSize="small" color="warning" />
                     <Typography variant="body2" ml={1}>
@@ -294,29 +228,13 @@ const Dining = () => {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Box
-                  sx={{
-                    border: "1px solid #ddd",
-                    mt: 1,
-                    p: 1,
-                    borderRadius: 2,
-                    bgcolor: "#FFFFFF",
-                  }} // Light gray border
-                >
+                <Box sx={DiningStyles.BookingTime}>
                   <Typography variant="body2">
                     <strong>Table B:</strong> {booking.tableB}
                   </Typography>
                 </Box>
 
-                <Box
-                  sx={{
-                    border: "1px solid #ddd",
-                    mt: 2,
-                    p: 1,
-                    borderRadius: 2,
-                    bgcolor: "#FFFFFF",
-                  }}
-                >
+                <Box sx={DiningStyles.BookingTime}>
                   <Typography variant="body2">
                     <strong>Table C:</strong> {booking.tableC}
                   </Typography>
@@ -324,24 +242,7 @@ const Dining = () => {
                 <Box display="flex" justifyContent="space-between" mt={2}>
                   <Button
                     variant="contained"
-                    sx={{
-                      background:
-                        booking.status === "Visited"
-                          ? "linear-gradient(90deg, #FDD30F, #FF6B28)"
-                          : booking.status === "Not Visited"
-                          ? "#FFA500"
-                          : "inherit",
-                      color:
-                        booking.status === "Customer Cancelled"
-                          ? "red"
-                          : booking.status === "Restaurant Rejected"
-                          ? "red"
-                          : booking.status === "Visited"
-                          ? "white"
-                          : booking.status === "Not Visited"
-                          ? "white"
-                          : "inherit",
-                    }}
+                    sx={DiningStyles.bookingButton(booking.status)}
                     startIcon={<AccessTimeIcon />}
                   >
                     {booking.status}
@@ -358,25 +259,13 @@ const Dining = () => {
                   <Dialog
                     open={isFoodMenuOpen}
                     onclose={handleCloseFoodMenu}
-                    sx={{
-                      "& .MuiDialog-paper": {
-                        position: "absolute",
-                        boxShadow: "none",
-                        background:'transparent',
-                        borderRadius:'2',
-                        top: "20%",
-                        right: "10%", // This moves the popup to the right
-                        width: "430px", // You can adjust the width as needed
-                        maxHeight: "80%", // Adjusts the height of the dialog
-                      },
-                      
-                    }}
+                    sx={DiningStyles.dialogStyles}
                     BackdropProps={{
-                      invisible: true, 
+                      invisible: true,
                     }}
                   >
                     <DialogContent>
-                      <FoodMenu  onclose={handleCloseFoodMenu}/>
+                      <FoodMenu onclose={handleCloseFoodMenu} />
                     </DialogContent>
                   </Dialog>
                 </Box>

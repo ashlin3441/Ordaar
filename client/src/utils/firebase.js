@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, FacebookAuthProvider, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
-    
+  
   };
 
 // Initialize Firebase
@@ -14,7 +14,7 @@ const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
 
 const signInWithGoogle = async () => {
-  try {
+  try { 
     const result = await signInWithPopup(auth, googleProvider);
     console.log("Google Sign-In Success:", result.user);
     return result.user;

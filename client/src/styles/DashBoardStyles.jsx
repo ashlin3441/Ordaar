@@ -193,4 +193,26 @@ export const styles1 = {
     },
     fontFamily: "outfit",
   },
+  ScrollBar6: {
+    maxHeight: "490px",
+    overflowY: "auto",
+    bgcolor: "transparent",
+    borderRadius: 5,
+    paddingRight: "30px",
+    "&::-webkit-scrollbar": {
+      width: "8px",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "#E2E2E2",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb": {
+      background: "#BDBDBD",
+      borderRadius: "10px",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      background: "#BDBDBD",
+    },
+    fontFamily: "outfit",
+  },
 };

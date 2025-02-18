@@ -23,7 +23,8 @@ import FoodMenu from "./components/FoodMenu";
 import Faq from "./pages/Faq";
 import ManageFaq from "./pages/ManageFaq";
 import Requests from "./pages/Requests";
-
+import Offers from "./pages/Offers";
+import TotalSales from "./pages/TotalSales";
 const DashboardLayout = ({ children }) => {
   const [profileOpen, setProfileOpen] = useState(false);
 
@@ -103,6 +104,22 @@ const App = () => {
               </DashboardLayout>
             }
           />
+           <Route
+            path="/totalsales"
+            element={
+              <DashboardLayout>
+                <TotalSales />
+              </DashboardLayout>
+            }
+          />
+          <Route
+            path="/offers"
+            element={
+              <DashboardLayout>
+                <Offers />
+              </DashboardLayout>
+            }
+          ></Route>
           <Route
             path="/requests"
             element={

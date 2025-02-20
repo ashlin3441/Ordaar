@@ -1,195 +1,170 @@
-import React, { useEffect, useState } from "react";
-import { Accordion, AccordionSummary, AccordionDetails, Typography } from "@mui/material";
+import React, { useState } from "react";
+import { 
+  Accordion, AccordionSummary, AccordionDetails, Typography, 
+  Card, CardContent 
+} from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import PhoneIcon from "@mui/icons-material/Phone";
 import ChatIcon from "@mui/icons-material/Chat";
+import ordersData from "../data/OrderData"; // Importing orders
 
 const OrderDetails = () => {
-  const [order, setOrder] = useState(null);
+  const [selectedOrder, setSelectedOrder] = useState(ordersData[0]); // 🟢 Set initial order
 
-  useEffect(() => {
-    const storedOrder = localStorage.getItem("selectedOrder");
-    if (storedOrder) {
-      setOrder(JSON.parse(storedOrder));
-    }
-  }, []);
+  if (!selectedOrder) {
+    return (
+      <Typography variant="h6" sx={{ textAlign: "center", mt: 3 }}>
+        No order selected
+      </Typography>
+    );
+  }
 
-  if (!order) {
-    return <h2>Loading Order Details...</h2>;
+  const prev = { 
+    position: "sticky", 
+    bottom: 0, left: 0, right: 0, 
+    backgroundColor: "white", 
+    boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.1)", 
+    // zIndex: 1000, 
+    padding: "10px"
   }
 
   return (
-    <div style={{ 
-      padding: "20px", 
-      fontFamily: "Arial, sans-serif", 
-      maxWidth: "700px", 
-      margin: "0 auto" 
-    }}>
-
-      {/* 🔹 Restaurant Details in a Box */}
-      <div style={{ 
-        padding: "15px", 
-        borderRadius: "10px", 
-        border: "1px solid #ddd", 
-        marginBottom: "20px", 
-        backgroundColor: "white"
-      }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={order.restaurant.logo}
-            alt="Restaurant Logo"
-            width="40"
-            height="40"
-            style={{ borderRadius: "50%", marginRight: "15px" }}
-          />
-          <div>
-            <h2 style={{ margin: "0" }}>{order.restaurant.name}</h2>
-            </div></div>
+    <div style={{ padding: "20px", maxWidth: "700px", margin: "0 auto", position: "relative", paddingBottom: "80px" }}>
+      
+      {/* Restaurant Details */}
+      <Card sx={{ marginBottom: "20px", padding: "15px" }}>
+        <CardContent>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <img src={selectedOrder.restaurant.logo} alt="Restaurant Logo" width="50" height="50" 
+              style={{ borderRadius: "50%", marginRight: "15px" }} 
+            />
             <div>
-            <p style={{ margin: "5px 0" }}>{order.restaurant.address}</p>
-            <p style={{ margin: "5px 0" }}>📞 {order.restaurant.phone}</p>
-            <PhoneIcon style={{ cursor: "pointer" }} />
-            <ChatIcon style={{ cursor: "pointer" }} />
-          </div></div>
-            
-          
-     
+              <Typography variant="h6">{selectedOrder.restaurant.name}</Typography>
+              <Typography variant="body2">{selectedOrder.restaurant.address}</Typography>
+              <Typography variant="body2">
+                📞 {selectedOrder.restaurant.phone} 
+                <PhoneIcon style={{ cursor: "pointer", marginLeft: "5px" }} />
+                <ChatIcon style={{ cursor: "pointer", marginLeft: "10px" }} />
+              </Typography>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      {/* 🔹 Delivery Boy & Customer Details */}
+      {/* Delivery Person & Customer Details */}
       <div style={{ display: "flex", gap: "15px", marginBottom: "20px" }}>
         
-        {/* Delivery Boy Details */}
-        <div style={{ 
-          flex: 1, 
-          padding: "10px", 
-          borderRadius: "10px", 
-          border: "1px solid #ddd", 
-          backgroundColor: "white" 
-        }}>
-          
-          <h4>Delivery Boy</h4>
-          <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={order.deliveryBoy.photo}
-            alt="Delivery Boy"
-            width="50"
-            height="50"
-            style={{ borderRadius: "50%", marginRight: "10px" }}
-          />
-          
-          <div>
-          
-          <p> {order.deliveryBoy.name}</p>
-          
-          <p>id: {order.deliveryBoy.phone}</p>
-          <PhoneIcon style={{ cursor: "pointer" }} />
-          </div>
-        </div>
-        </div>
+        {/* Delivery Person */}
+        <Card sx={{ flex: 1, padding: "10px" }}>
+          <CardContent>
+            <Typography variant="subtitle1">Delivery Person</Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <img src={selectedOrder.deliveryBoy.photo} alt="Delivery Person" width="50" height="50" 
+                style={{ borderRadius: "50%", marginRight: "10px" }} 
+              />
+              <div>
+                <Typography>{selectedOrder.deliveryBoy.name}</Typography>
+                <Typography variant="body2">ID: {selectedOrder.deliveryBoy.id}</Typography>
+                <Typography variant="body2">{selectedOrder.deliveryBoy.phone}</Typography>
+                <PhoneIcon style={{ cursor: "pointer" }} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
-        {/* Customer Details */}
-        <div style={{ 
-          flex: 1, 
-          padding: "10px", 
-          borderRadius: "10px", 
-          border: "1px solid #ddd", 
-          backgroundColor: "white" 
-        }}>
-          <h4>Customer</h4>
-          <div style={{ display: "flex", alignItems: "center" }}>
-          <img
-            src={order.customer.photo}
-            alt="Customer"
-            width="50"
-            height="50"
-            style={{ borderRadius: "50%", marginRight: "10px" }}
-          />
-          <div>
-          <p> {order.customer.name}</p>
-          <p> {order.customer.phone}</p>
-          <p>{order.customer.address}</p>
-          <PhoneIcon style={{ cursor: "pointer" }} />
-        </div>
-        </div>
-        </div>
+        {/* Customer */}
+        <Card sx={{ flex: 1, padding: "10px" }}>
+          <CardContent>
+            <Typography variant="subtitle1">Customer</Typography>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <img src={selectedOrder.customer.photo} alt="Customer" width="50" height="50" 
+                style={{ borderRadius: "50%", marginRight: "10px" }} 
+              />
+              <div>
+                <Typography>{selectedOrder.customer.name}</Typography>
+                <Typography variant="body2">{selectedOrder.customer.address}</Typography>
+                <Typography variant="body2">{selectedOrder.customer.phone}</Typography>
+                <PhoneIcon style={{ cursor: "pointer" }} />
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
-      {/* 🔹 Ordered Items */}
-      <h3>Ordered Items</h3>
-      {order.items.map((item, index) => (
-        <div
-          key={index}
-          style={{
-            display: "flex",
-            alignItems: "center",
-            border: "1px solid #ddd",
-            borderRadius: "10px",
-            padding: "10px",
-            marginBottom: "10px",
-            backgroundColor: "#ffffff",
-          }}
-        >
-          <img
-            src={item.image}
-            alt={item.name}
-            width="50"
-            height="50"
-            style={{ borderRadius: "50%", marginRight: "10px" }}
-          />
-          <div>
-            <h4 style={{ margin: "0" }}>{item.name}</h4>
-            <p style={{ margin: "5px 0" }}>Size: {item.size}</p>
-            <p style={{ margin: "5px 0" }}>Qty: {item.quantity}</p>
-            <p style={{ margin: "5px 0", fontWeight: "bold" }}>💰 ₹{item.price}</p>
-          </div>
-        </div>
+      {/* Ordered Items */}
+      <Typography variant="h6" gutterBottom>Ordered Items</Typography>
+      {selectedOrder.items.map((item) => (
+        <Card key={item.id} sx={{ marginBottom: "10px", padding: "10px" }}>
+          <CardContent>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <img src={item.image} alt={item.name} width="50" height="50" 
+                style={{ borderRadius: "50%", marginRight: "10px" }} 
+              />
+              <div>
+                <Typography variant="subtitle1">{item.name}</Typography>
+                <Typography variant="body2">Size: {item.size}</Typography>
+                <Typography variant="body2">Qty: {item.quantity}</Typography>
+                <Typography variant="body1" fontWeight="bold">₹{item.price}</Typography>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       ))}
 
-      {/* 🔹 Payment Details - Below Ordered Items */}
-      <Accordion
-        sx={{
-          backgroundColor: "white",
-          boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.1)",
-          borderRadius: "10px",
-          marginTop: "15px",
-          marginBottom:"10px"
-        }}
-      >
-        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-          <Typography sx={{ fontWeight: "bold", backgroundColor: "transparent" }}>Payment Details</Typography>
-        </AccordionSummary>
-        <AccordionDetails style={{ padding: "15px" }}>
-          
-          {/* Order Status & Delivery Time */}
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: "bold", marginBottom: "10px" }}>
-            <span> {order.status}</span>
-            {order.status === "Delivered" && <span>{order.time}</span>}
-          </div>
+      {/* 🟢 Payment Details (Fixed at Bottom & Expands Upwards) */}
+      <div style={prev}> 
+        <Accordion
+          sx={{ 
+            boxShadow: "none",
+             borderRadius: "10px",
+            '& .MuiCollapse-root': {
+          position: 'absolute',
+          bottom: '100%',
+          width: '100%',
+          marginBottom: '1px',
+        },
+        position: 'relative',
+        marginTop: '200px' // Space for upward expansion
+      }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{
+            backgroundColor: "#f5f5f5",
+            backgroundColor: "#f5f5f5",
+          '& .MuiAccordionSummary-expandIconWrapper': {
+            transform: 'rotate(180deg)',
+          },
+          '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
+            transform: 'rotate(0deg)',
+          },
+            }}>
+            <Typography fontWeight="bold">Payment Details</Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ padding: "15px" }}>
+            
+            {/* Order Status & Time */}
+            <div style={{ display: "flex", justifyContent: "space-between", fontWeight: "bold", marginBottom: "10px" }}>
+              <span>Status: {selectedOrder.status}</span>
+              <span>{selectedOrder.time}</span>
+            </div>
 
-          <hr style={{ border: "0.5px solid #ddd" }} />
+            <hr style={{ border: "0.5px solid #ddd" }} />
 
-          {/* Payment Breakdown */}
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
-            <span>Subtotal</span> <span>₹{order.totalAmount}</span>
-          </div>
-          <hr style={{ border: "0.5px solid #ddd" }} />
+            {/* Payment Breakdown */}
+            <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
+              <span>Subtotal</span> <span>₹{selectedOrder.totalAmount}</span>
+            </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
-            <span>Delivery Boy Tip</span> <span>₹{order.tip}20</span>
-          </div>
-          <hr style={{ border: "0.5px solid #ddd" }} />
+            <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
+              <span>Delivery Charge</span> <span>₹30</span>
+            </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", padding: "5px 0" }}>
-            <span>Delivery Charge</span> <span>₹{order.deliveryCharge}30</span>
-          </div>
-          <hr style={{ border: "0.5px solid #ddd" }} />
+            <div style={{ display: "flex", justifyContent: "space-between", fontWeight: "bold", padding: "5px 0" }}>
+              <span>Total</span> <span>₹{selectedOrder.totalAmount + 30}</span>
+            </div>
 
-          <div style={{ display: "flex", justifyContent: "space-between", fontWeight: "bold", padding: "5px 0" }}>
-            <span>Total</span> <span>₹{order.totalAmount+50}</span>
-          </div>
-
-        </AccordionDetails>
-      </Accordion>
+          </AccordionDetails>
+        </Accordion>
+      </div>
 
     </div>
   );

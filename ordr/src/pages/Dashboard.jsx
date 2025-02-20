@@ -16,17 +16,14 @@ const Dashboard = () => {
   };
 
   const handleOrderClick = (order) => {
-    setSelectedOrder(order);
+    setSelectedOrder(order); // ✅ Update selected order on click
   };
 
   return (
     <Box
       sx={{
         display: "grid",
-        gridTemplateColumns: {
-          xs: "1fr",
-          md: "40% 2px 60%",
-        },
+        gridTemplateColumns: { xs: "1fr", md: "40% 2px 60%" },
         gridTemplateRows: "1fr",
         gap: { xs: "8px", sm: "16px" },
         padding: { xs: "8px", sm: "16px" },
@@ -41,7 +38,7 @@ const Dashboard = () => {
           gridColumn: { xs: "1", md: "1 / 2" },
           overflowY: "auto",
           height: "100%",
-          marginTop:"10px"
+          marginTop: "10px",
         }}
       >
         {showOrdersPage ? (
@@ -49,7 +46,7 @@ const Dashboard = () => {
         ) : (
           <>
             <DailyReport />
-            <Orders onManageClick={handleManageClick} />
+            <Orders onManageClick={handleManageClick} onOrderClick={handleOrderClick} />
           </>
         )}
       </Box>
@@ -61,17 +58,17 @@ const Dashboard = () => {
           gridColumn: "2 / 3",
           backgroundColor: "#ccc",
           height: "100%",
-          marginTop:"15px"
+          marginTop: "15px",
         }}
       />
 
-      {/* Right Section (Food Categories + Total Sales OR Order Details) */}
+      {/* Right Section (Order Details or Other Components) */}
       <Box
         sx={{
           gridColumn: { xs: "1", md: "3 / 4" },
           height: "100%",
           overflowY: "auto",
-          marginTop:"15px"
+          marginTop: "15px",
         }}
       >
         {selectedOrder ? (

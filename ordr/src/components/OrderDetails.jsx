@@ -129,7 +129,6 @@ const OrderDetails = () => {
         >
           <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{
             backgroundColor: "#f5f5f5",
-            backgroundColor: "#f5f5f5",
           '& .MuiAccordionSummary-expandIconWrapper': {
             transform: 'rotate(180deg)',
           },
